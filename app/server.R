@@ -1,3 +1,30 @@
+if (!require("shiny")) install.packages("shiny")
+library(shiny)
+if (!require("dplyr")) { install.packages("dplyr")}
+library(dplyr)
+if (!require("tidyverse")) { install.packages("tidyverse")}
+library(tidyverse)
+if (!require("DT")) { install.packages("DT")}
+library(DT)
+if (!require("ggplot2")) { install.packages("ggplot2")}
+library(ggplot2)
+if (!require("lubridate")) { install.packages("lubridate")}
+library(lubridate)
+if (!require("plotly")) { install.packages("plotly")}
+library(plotly)
+if (!require("hrbrthemes")) { install.packages("hrbrthemes")}
+library(hrbrthemes)
+if (!require("highcharter")) { install.packages("highcharter")}
+library(highcharter)
+if (!require("RColorBrewer")) { install.packages("RColorBrewer")}
+library(RColorBrewer)
+if(!require(fontawesome)) devtools::install_github("rstudio/fontawesome")
+if (!require("geojsonio")) { install.packages("geojsonio")}
+library(geojsonio)
+if (!require("readr")) { install.packages("readr")}
+library(readr)
+if (!require("leaflet")) { install.packages("leaflet")}
+library(leaflet)
 
 source("global.R")
 library(shinydashboard)
@@ -17,7 +44,7 @@ shinyServer(function(input, output, session) {
                 data2$COVID_DEATH_COUNT
             }
     
-        #create palette
+        #create palette  
         pal <- colorNumeric(
             palette = "Reds",
             domain = parameter)
@@ -61,5 +88,58 @@ shinyServer(function(input, output, session) {
                       position = "bottomright")
     })
     
+    
+    
+    # #covid vaccination Button
+    # observeEvent(input$covid_vaccination, {
+    #   proxy <- leafletProxy("mymap", data = covid_vaccination)
+    #   palette_fm = c("red","grey", "green")
+    #   color2 <- colorFactor(palette =palette_fm, covid_vaccination$Vaccine_offered)
+    #   proxy %>% clearControls()
+    #   
+    #   # clear the map
+    #   leafletProxy("map", data = covid_vaccination) %>%
+    #     clearShapes() %>%
+    #     clearMarkers() %>%
+    #     addProviderTiles("CartoDB.Voyager") %>%
+    #     fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+    #   
+    #   leafletProxy("map", data = covid_vaccination)%>%
+    #     clearShapes() %>%
+    #     addProviderTiles("CartoDB.Voyager") %>%    
+    #     addCircleMarkers(~Longitude, ~Latitude, radius=10,
+    #                      color = ~color2(Vaccine_offered),
+    #                      label = paste(covid_vaccination$Name, ', ', covid_vaccination$Type,', ', covid_vaccination$Location))%>%
+    #     addLegend("bottomright",
+    #               pal = color2,
+    #               values = covid_vaccination$Vaccine_offered,
+    #               title = "Vaccine offered",
+    #               opacity = 1)
+    # })
+    # 
 
+    
+    #covid vaccination Button
+    observeEvent(input$covid_vaccination, {
+      proxy <- leafletProxy("map", data = covid_vaccination)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = covid_vaccination) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "red",
+                                              text = fa("syringe")), label= ~Name,                                  
+                          popup = paste(
+                            "<b>Address:</b>", covid_vaccination$Location,", ", covid_vaccination$Zip_code,  "<br>",
+                            "<b>Type:</b>", covid_vaccination$Type, "<br>",
+                            "<b>Vaccine offered:</b>", covid_vaccination$Vaccine_offered, "<br>"))
+    })     
 })

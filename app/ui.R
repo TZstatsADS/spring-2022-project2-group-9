@@ -53,10 +53,13 @@ shinyUI(fluidPage(
                                           # selectInput("choices","Choose Activity:",
                                           #                    choices = c("","Covid Vaccination"="vaccination","Homeless Drop-in Center"="homeless_drop_in"),
                                           #                    selected = c(""))
-                                          
+                                          fluidPage(
+                                            actionButton("covid_vaccination","Covid Vaccination",icon=icon("utensils",  lib = "font-awesome")),
                                           )
+                                          )
+
                             )
-                        ),
+                        ), 
                # ---------------------------------------------------------------
                # # tab panel 3: Plot
                # tabPanel("Case Plot", icon = icon("bar-chart-o"),

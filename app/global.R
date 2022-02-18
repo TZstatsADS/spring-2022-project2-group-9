@@ -29,6 +29,8 @@ library(numDeriv)
 
 ## NYC Outdoor Activity Data ###################################
 
+covid_vaccination = read.csv("../data/Covid_Vaccine.csv") 
+
 
 ## Covid Confirmed Cases Data for map ###################################
 
@@ -191,6 +193,7 @@ for(i in names(perp_zipcode)){
      return(1)
    }
  }
+ 
 
  
  #prediction function
