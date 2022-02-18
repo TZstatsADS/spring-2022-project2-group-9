@@ -146,3 +146,95 @@ for (i in 3:ncol(cbd)){
 
 Borough_case <- c("Citywide","Manhattan", "Queens", "Bronx", "Brooklyn", "Staten Island")
 
+#prediction function
+source("../lib/trend.R")
+
+#create predictions
+predictions_perp <-  perp_zipcode[0,]
+pred_vector = list(as.Date(perp_zipcode[nrow(perp_zipcode),1])+7)
+for(i in names(perp_zipcode)){
+   if(i=="week"){
+     next
+   }
+   pred_vector = append(pred_vector,round(perp_zipcode[nrow(perp_zipcode),i]+ trend(perp_zipcode,perp_zipcode[i]),digits=2))
+ }
+ predictions_perp[1,] = pred_vector
+
+ predictions_case2 <-  case_zipcode[0,]
+ pred_vector = list(as.Date(case_zipcode[nrow(case_zipcode),1])+7)
+ for(i in names(case_zipcode)){
+   if(i=="week"){
+     next
+   }
+   pred_vector = append(pred_vector,round(case_zipcode[nrow(case_zipcode),i]+ trend(case_zipcode,case_zipcode[i]),digits=2)/1000)
+ }
+ predictions_case2[1,] = pred_vector
+
+
+ predictions_case <-  case_zipcode[0,]
+ pred_vector = list(as.Date(case_zipcode[nrow(case_zipcode),1])+7)
+ for(i in names(case_zipcode)){
+   if(i=="week"){
+     next
+   }
+   pred_vector = append(pred_vector,round(case_zipcode[nrow(case_zipcode),i]+ trend(perp_zipcode,perp_zipcode[i]),digits=2))
+ }
+ predictions_case[1,] = pred_vector
+
+ #combine predictions_perp and predictions_case2 for plotting reasons
+ predictions_combo = rbind(predictions_perp,predictions_case2)
+
+ convert = function(type){
+   if(type == "Case.rate"){
+     return(2)
+   }else if(type == "Positive.test.rate"){
+     return(1)
+   }
+ }
+
+ 
+ #prediction function
+  source("../lib/trend.R")
+  
+  #create predictions
+  predictions_perp <-  perp_zipcode[0,]
+  pred_vector = list(as.Date(perp_zipcode[nrow(perp_zipcode),1])+7)
+  for(i in names(perp_zipcode)){
+    if(i=="week"){
+      next
+    }
+    pred_vector = append(pred_vector,round(perp_zipcode[nrow(perp_zipcode),i]+ trend(perp_zipcode,perp_zipcode[i]),digits=2))
+  }
+  predictions_perp[1,] = pred_vector
+  
+  predictions_case2 <-  case_zipcode[0,]
+  pred_vector = list(as.Date(case_zipcode[nrow(case_zipcode),1])+7)
+  for(i in names(case_zipcode)){
+    if(i=="week"){
+      next
+    }
+    pred_vector = append(pred_vector,round(case_zipcode[nrow(case_zipcode),i]+ trend(case_zipcode,case_zipcode[i]),digits=2)/1000)
+  }
+  predictions_case2[1,] = pred_vector
+ 
+ 
+  predictions_case <-  case_zipcode[0,]
+  pred_vector = list(as.Date(case_zipcode[nrow(case_zipcode),1])+7)
+  for(i in names(case_zipcode)){
+    if(i=="week"){
+      next
+    }
+    pred_vector = append(pred_vector,round(case_zipcode[nrow(case_zipcode),i]+ trend(perp_zipcode,perp_zipcode[i]),digits=2))
+  }
+  predictions_case[1,] = pred_vector
+  
+  #combine predictions_perp and predictions_case2 for plotting reasons
+  predictions_combo = rbind(predictions_perp,predictions_case2)
+  
+  convert = function(type){
+    if(type == "Case.rate"){
+      return(2)
+    }else if(type == "Positive.test.rate"){
+      return(1)
+    }
+  }
