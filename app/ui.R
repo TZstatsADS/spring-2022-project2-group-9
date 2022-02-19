@@ -1,3 +1,4 @@
+
 #
 # This is the user-interface definition of a Shiny web application. You can
 # run the application by clicking 'Run App' above.
@@ -6,157 +7,320 @@
 #
 #    http://shiny.rstudio.com/
 #
-library(DT)
-source("global.R")
+
+library(shiny)
+
+# Define UI for application 
+# library(DT)
+# source("global.R")
 library(shinydashboard)
-library(shinythemes)
+# library(shinythemes)
 
-shinyUI(fluidPage(
-    navbarPage(title = "NYC Outdoor Activity Guidebook",
-               fluid = TRUE,
-               collapsible = TRUE,
-               theme = shinytheme("superhero"),
-               # ---------------------------------------------------------------
-               # tab panel 1: Home
-               # tabPanel("Home", icon = icon("home"),
-               #          
-               #          
-               #          tags$div(
-               #            tags$h4("Everyone wants to stay healthy, but it's harder today than ever..."),
-               #            tags$h4("The COVID-19 Pandemic means parks, dogruns, and courts are often closed.")
-               #          ),
-               #          fluidRow(
-               #            valueBoxOutput("box1"),
-               #            valueBoxOutput("box2"),
-               #            valueBoxOutput("box3")),
-               #          tags$div(
-               #            tags$br(), tags$br(),
-               #            tags$h5("Our solution is to gather public park and field information in one convenient place,"),
-               #            tags$h5("Click on the Interactive Map to find spots near you, or search for specific ones in the Search tab.")
-               #          )
-               #          ,
-               #          HTML('<center><img src="running.jpg", height="300px"></center>')),
-               # ---------------------------------------------------------------
-               # tab panel 2: Map
-               tabPanel("Interactive Map", icon = icon("globe"),
-                        div(class="outer",
-                            tags$head(includeCSS("styles.css")),
-                            leafletOutput("map", width="100%", height="100%"),
-                            absolutePanel(id="controls", class="panel panel-default",
-                                          top=75, left=55, width=250, fixed=TRUE,dragged=TRUE, height="auto",
-                                          shiny::span(tags$b(h4("check the types of case data you want: ")), style="color:#045a8d"),
-                                          selectInput("choice",
-                                                      label = "case type: ",
-                                                      choices = c("positive cases","cumulative cases","cumulative death"), 
-                                                      selected = "people_positive"),
-                                          # shiny::span(tags$b(h4("Select the outdoor activities you want to go:")), style="color:#045a8d"),
-                                          # selectInput("choices","Choose Activity:",
-                                          #                    choices = c("","Covid Vaccination"="vaccination","Homeless Drop-in Center"="homeless_drop_in"),
-                                          #                    selected = c(""))
-                                          fluidPage(
-                                            actionButton("covid_vaccination","Covid Vaccination",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("flu_vaccination","Flu Shot",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("wifi","Wifi Spot",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("food","Food Centers",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("drop_in","Drop In Centers",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("youth_drop_in","Youth Shelters",icon=icon("utensils",  lib = "font-awesome")),
-                                            actionButton("job","Job & Internship Centers",icon=icon("utensils",  lib = "font-awesome"))
-                                          )
-                                          )
-
-                            )
-                        ), 
-               # ---------------------------------------------------------------
-               # # tab panel 3: Plot
-               # tabPanel("Case Plot", icon = icon("bar-chart-o"),
-               #          sidebarPanel(
-               #            tabsetPanel(
-               #              tabPanel("Rate trend by zip code",
-               #                       selectInput("Borough",label = "Borough",
-               #                                   Borough, selected = "Citywide", multiple = FALSE),
-               #                       
-               #                       selectInput("Zip_code", label = "Zipcode",
-               #                                   unique(cp_merged$zipcode), selected = "Manhattan"),
-               #                       
-               #                       selectInput("Rate_type", label = "percentage of case or positive test",
-               #                                   ratetype, selected = "Case.rate"),
-               #              ),
-               #              tabPanel("Case trend by borough",
-               #                       selectInput("Borough2", label = "Borough",
-               #                                   Borough_case, selected = "Citywide"))
-               #            )),
-               #          mainPanel(
-               #            tabsetPanel(
-               #              tabPanel("Covid-19 Trend in NYC",
-               #                       # fluidRow(...)
-               #                       plotlyOutput("plot"),
-               #                       plotlyOutput("plot2")
-               #              )
-               #            )
-               #          )
-               # ),
-               # 
-               # ---------------------------------------------------------------
-               # # tab panel 4: Search
-               # tabPanel("Search", icon = icon("table"), 
-               #          tags$style(HTML("
-               #      .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-               #      color: #ffffff;
-               #      }
-               #      
-               #      .dataTables_wrapper .dataTables_paginate .paginate_button{box-sizing:border-box;display:inline-block;min-width:1.5em;padding:0.5em 1em;margin-left:2px;text-align:center;text-decoration:none !important;cursor:pointer;*cursor:hand;color:#ffffff !important;border:1px solid transparent;border-radius:2px}
-               # 
-               #      .dataTables_length select {
-               #             color: #0E334A;
-               #             background-color: #F5F5F5
-               #             }
-               # 
-               #      .dataTables_filter input {
-               #              color: #0E334A;
-               #              background-color: #F5F5F5
-               #             }
-               # 
-               #      thead {
-               #      color: #ffffff;
-               #      }
-               # 
-               #       tbody {
-               #      color: #000000;
-               #      }
-               # 
-               #     "
-               #          )),
-               #          
-               #          DT::dataTableOutput("search_result")), 
-               
-               # ---------------------------------------------------------------
-               # tab panel 5: About
-               tabPanel("About", icon = icon("list-alt"),
-                        HTML('<center><img src="covid.jpg", height="400px"></center>'),
-                        tags$div(
-                          tags$h4("Data Sources"),
-                          "NYC Outdoor Activity Data: ", tags$a(href="https://www.nycgovparks.org/bigapps/", "NYC Parks Open Data"), tags$br(),
-                          "NYC Last-7-day Cases by Cipcode: ", tags$a(href="https://github.com/nychealth/coronavirus-data/blob/master/latest/last7days-by-modzcta.csv", "The Health Department of NYC"), tags$br(),
-                          "NYC Total Cases by Zipcode: ", tags$a(href="https://github.com/nychealth/coronavirus-data/blob/master/totals/data-by-modzcta.csv", "The Health Department of NYC"), tags$br(),
-                          "NYC Positive Case Rate by Borough and Zipcode: ", tags$a(href="https://github.com/nychealth/coronavirus-data/blob/master/trends/caserate-by-modzcta.csv", "The Health Department of NYC"),
-
-                          
-                          tags$br(),tags$br(),tags$h4("Contributor"),
-                          "Ai, Haosheng | ha2583@columbia.edu", tags$br(),
-                          "Chen, Ellen | zc2574@columbia.edu", tags$br(),
-                          "Harris, Sean | sh3715@columbia.edu", tags$br(),
-                          "He, Changhao | ch3557@columbia.edu", tags$br(),
-                          "Pan, Yushi | yp2560@columbia.edu", 
-                          
-                          tags$br(), tags$br(), tags$h4("Code"),
-                          "Code and input data used to generate this Shiny App are avaliable on ", tags$a(href="https://github.com/TZstatsADS/Spring2021-Project2-group3", "Github."),
-                          tags$br(), tags$br()
-                        )
-                        )
-
+dashboardPage(
+  skin = "black",
+  
+  dashboardHeader(title = "Struggling Youth"),
+  
+  dashboardSidebar(sidebarMenu(
+    menuItem("Home", tabName = "Home", icon = icon("home")),
+    menuItem("NYC Map", tabName = "NYCMap", icon = icon("fas fa-globe-americas")),
+    menuItem("Grocery Stores", tabName = "GroceryStores", icon = icon("fas fa-shopping-cart"),
+             menuSubItem("Grocery Stores Search Tool", tabName = "GroceryMap", icon = icon("fas fa-search")),
+             menuSubItem("Summary", tabName = "Summary", icon = icon("fas fa-chart-area"))),
+    menuItem("Safety Map", tabName = "SafetyMap", icon = icon("fas fa-globe")),
+    menuItem("Neighborhood Analysis", tabName = "Neighborhood", icon = icon("fas fa-users")),
+    menuItem("Age Group Analysis", tabName = "Age", icon = icon("fas fa-chart-bar")),
+    menuItem("About", tabName = "About", icon = icon("fas fa-asterisk"))
+  )),
+  
+  dashboardBody(
+    
+    tabItems(
+      #     
+      #     #----------------------------Home Page------------------------------------
+      #     
+      #     tabItem(tabName = "Home",
+      #             fluidPage(
+      #               
+      #               # header image
+      #               img(src = 'https://raw.githubusercontent.com/TZstatsADS/Spring2021-Project2-group2/master/app/www/header.png?token=ASOKTIRIASA5QBLBYDHGXVDAGQ52E', width = '100%'),
+      #               
+      #               
+      #               # dashboard for current stats
+      #               fluidRow(
+      #                 column(4,
+      #                        fluidRow(
+      #                          h2("Current NYC Status", align = "left"),
+      #                          textOutput("timestamp")),
+      #                        br(),
+      #                        fluidRow(infoBoxOutput("NYCtotal", width = 12)),
+      #                        fluidRow(infoBoxOutput("Boro", width = 12)),
+      #                        fluidRow(infoBoxOutput("Zipcode", width = 12)),
+      #                        fluidRow(infoBoxOutput("Boro_safe", width = 12)),
+      #                        fluidRow(infoBoxOutput("Zipcode_safe", width = 12))),
+      #                 
+      #                 # the introduction section    
+      #                 column(8,
+      #                        box(width = '100%',
+      #                            h1("Travel Safely for Your Grocery Today!", align = "center"),
+      #                            br(),
+      #                            tags$div(tags$ul("The American life has been dramatically changed by COVID-19 since 2020, with confirmed cases climbing from thousands to millions within a span of a few months.",
+      #                                             "The state of New York has been the top 5 states with most COVID cases in America since the beginning of the pandemic, and ", span(strong("New York City")), 
+      #                                             "has 5 times higher case counts than the rest of the state. Activities and restaurants are open and shut-down with changes in health guidelines, leaving only the essential businesses open.",
+      #                                             br(),br(),
+      #                                             "Shopping for grocery is one essential task for many New Yorkers, and how to get around safely to get your grocery has become a challenge during COVID.",
+      #                                             "Living in the City of New York, we need to learn how to continue our daily routine while keeping ourselves and our community safe.",
+      #                                             "As a result, we have created this webpage to help our fellow New Yorkers to receive up-to-date COVID information about the areas where they want to shop for grocery.",
+      #                                             br(),br(),
+      #                                             span(strong("If you ever have some of these similar ideas:")),
+      #                                             br(),br(),
+      #                                             tags$li("I enjoy picking out my own grocery."),
+      #                                             tags$li("I like to have fresh food."),
+      #                                             tags$li("I don't use app delivery for food."),
+      #                                             tags$li("I don't like other people touching my food."),
+      #                                             tags$li("I enjoy going to the store physically."),
+      #                                             tags$li("I crave for food randomly and want to know what's available around my area."),
+      #                                             tags$li("I just want to go out and walk around!!!"),
+      #                                             "and many more...")),
+      #                            h2(id ="smalltitle", "You have come to the right place!!!", align = "center"),
+      #                            tags$style(HTML("#smalltitle{color:green; font-style: bold;}")),
+      #                            div(img(src = "https://raw.githubusercontent.com/TZstatsADS/Spring2021-Project2-group2/master/app/www/footer.gif?token=ASOKTIWBNAS2SZ5NG7PKU6DAGQ57S", width = '70%'), style = "text-align: center;")
+      #                        )))
+      #             )),            
+      #     
+      #     #------------------------------NYC Map------------------------------------
+      tabItem(tabName = "NYCMap", 
+              fluidPage(
+                actionButton("covid_vaccination","Covid Vaccination",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("flu_vaccination","Flu Shot",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("wifi","Wifi Spot",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("food","Food Centers",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("drop_in","Drop In Centers",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("youth_drop_in","Youth Shelters",icon=icon("utensils",  lib = "font-awesome")),
+                actionButton("job","Job & Internship Centers",icon=icon("utensils",  lib = "font-awesome"))
+              ),
+              
+              
+              selectInput("choice",
+                          label = "case type: ",
+                          choices = c("positive cases","cumulative cases","cumulative death"), 
+                          selected = "people_positive"),
+              
+              leafletOutput("map", width="100%", height=800)
     )
-))
-                            
+    
+    #     
+    #     #------------------------------Grocery Map------------------------------------
+    #     
+    #     tabItem(tabName = "GroceryMap",
+    #             fluidPage(
+    #               fluidRow(
+    #                 width = 60,
+    #                 h1("Grocery Stores in NYC", align = "center")),
+    #               fluidRow(
+    #                 column(4,
+    #                        wellPanel(
+    #                          helpText("Select the range for zip code:"),
+    #                          sliderInput("Range", label = h3("Range"), min = 0, max = 10, value = 0),
+    #                          hr(),
+    #                          p("Current List of Zip Codes:", style = "color:#888888;"), 
+    #                          verbatimTextOutput("ranges_display")
+    #                          
+    #                        )),
+    #                 column(4,
+    #                        helpText("Select the zip code of your interest:"),
+    #                        selectInput("Zip Code", "Choose Zip Code", choices=nyc_only$Zip.Code)),
+    #                 column(4,
+    #                        helpText("", br(),
+    #                                 strong("Choose a zip code and range of your interest to search for safe stores to get your grocery."),
+    #                                 hr(),
+    #                                 "Example:", br(), "A zip code of 10002 and a range of 1 would search for stores in zip codes 10001, 10002, and 10003, the current stores with lowest case counts will be displayed in the following table.",
+    #                                 hr(),
+    #                                 "Note:", br(), "Only the current safest stores in NYC will be displayed.",
+    #                                 "", br()))
+    #               ),
+    #               br(),
+    #               br(),
+    #               #table
+    #               h2("Best Stores within Selected Range"),
+    #               DT::dataTableOutput("table1"), 
+    #               
+    #               # suppress error message
+    #               tags$style(type="text/css",
+    #                          ".shiny-output-error { visibility: hidden; }",
+    #                          ".shiny-output-error:before { visibility: hidden; }"
+    #               ),
+    #               # map
+    #               mainPanel(leafletOutput("grocery_map", height = 600), width = 12)
+    #             )),
+    #     
+    #     tabItem(tabName = "Summary",
+    #             fluidPage(
+    #               plotOutput("hist"),
+    #               br(),
+    #               br(),
+    #               h2("Stores with Lowest Cases", align = "center"),
+    #               DT::dataTableOutput("table2")
+    #             )),         
+    #     #------------------------------Safety Map------------------------------------
+    #     
+    #     tabItem(tabName = "SafetyMap",
+    #             fluidPage(
+    #               
+    #               fluidRow(
+    #                 width = 60,
+    #                 h1("NYC Shooting Statistics", align = "center")),
+    #               
+    #               mainPanel(leafletOutput("safetymap", height=600),
+    #                         br(),
+    #                         plotlyOutput("pie"), width=12)
+    #             )),         
+    #     
+    #     #----------------------------Neighborhood Analysis------------------------------------
+    #     
+    #     tabItem(tabName = "Neighborhood",
+    #             fluidPage(
+    #               
+    #               # tab title 
+    #               fluidRow(
+    #                 width = 60,
+    #                 h1("How Well Do You Know Your Borough During COVID?")),
+    #               
+    #               # create a drop down to select borough
+    #               fluidRow(
+    #                 width = 60, 
+    #                 selectInput("boroname", 
+    #                             label = "Select Your Borough", 
+    #                             choices = c('Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island'), 
+    #                             multiple = F, selected = "Bronx")),
+    #               
+    #               # create pie charts for selected borough
+    #               fluidRow(plotlyOutput("pie_chart")),
+    #               
+    #               # time series chart on boro's case count
+    #               fluidRow(plotlyOutput("time_series_plot"))
+    #               
+    #             )),
+    #     
+    #     
+    #     
+    #     #------------------------------------Age Group Analysis------------------------------------
+    #     
+    #     tabItem(tabName = "Age",
+    #             fluidPage(
+    #               
+    #               #title
+    #               fluidRow(
+    #                 width = 60,
+    #                 h1("What can we see from the age distribution of COVID-19?")),
+    #               
+    #               #The distribution of death by age
+    #               
+    #               fluidRow(plotlyOutput("count")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h2("Compared with the counts, would the rates give us a different tendency?")),
+    #               #Show the comparison of the rates
+    #               fluidRow(
+    #                 tabBox(
+    #                   # Title can include an icon
+    #                   title = tagList("COVID-19 Illness Rate by Disease Severity"),
+    #                   tabPanel("Case Rate",
+    #                            plotlyOutput("case_rate")
+    #                   ),
+    #                   tabPanel("Hospitalized Rate",plotlyOutput("hos_rate")),
+    #                   tabPanel("Death Rate",plotlyOutput("death_rate"))
+    #                   
+    #                 )),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h2("Results from the two groups of plots:")
+    #               ),                              
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3("Both the count and the rate suggest the old people are not easier to get COVID-19 compared with younger groups, but is this result totally reasonable?")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3("")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3("")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h2("Assumption: The survivor bias caused by the passive test policy can effect the data NYC collected")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3("Old people and kids should have a lower test rate as it can be harder for them to go to the test spots")),  
+    #               fluidRow(plotlyOutput("test_rate")),
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3(" ")),  
+    #               fluidRow(
+    #                 width = 60,
+    #                 h3("Besides, if the survivor bias exists, old people should have a lower positive rate because they're easier to get severe illness")), 
+    #               fluidRow(plotlyOutput("pos_rate"))
+    #             )),        
+    #     
+    #     
+    #     #-------------------------------------Reference Page---------------------------------
+    #     tabItem(tabName = "About", 
+    #             HTML(
+    #               "<h2> Data Source : </h2>
+    #                             <h4><li>NYC COVID-19 Data : <a href='https://github.com/nychealth/coronavirus-data' target='_blank'>Github NYC Health</a></li></h4>
+    #                             <h4><li>NYC Shooting Data : <a href='https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Year-To-Date-/5ucz-vwe8' target='_blank'>NYC Public Safety</a></li></h4>
+    #                             <h4><li>NYC Retail Food Stores Data : <a href='https://catalog.data.gov/dataset/retail-food-stores' target='_blank'>State of NY government</a></li></h4>
+    #                             <h4><li>NYC Farmers Market Data : <a href='https://catalog.data.gov/dataset/farmers-markets-in-new-york-state' target='_blank'>State of NY government</a></li></h4>"
+    #               
+    #             ),
+    #             
+    #             titlePanel("Disclaimers : "),
+    #             HTML(
+    #               "<b>NYC COVID-19 Data: </b> <br>
+    #                             <li>This repository contains data on Coronavirus Disease 2019 (COVID-19) in New York City (NYC).  </li>
+    #                             <li>The Health Department classifies the start of the COVID-19 outbreak in NYC as the date of the first laboratory-confirmed case, February 29, 2020. </li>
+    #                             " 
+    #             ),
+    #             
+    #             HTML(
+    #               "<b>NYC Shooting Data : </b> <br>
+    #                             <li>List of every shooting incident that occurred in NYC during the current calendar year.</li>"
+    #             ),
+    #             
+    #             HTML(
+    #               "<b>NYC Retail Food Stores Data : </b> <br>
+    #                             <li>A listing of all retail food stores which are licensed by the Department of Agriculture and Markets. </li>"
+    #             ),
+    #             
+    #             HTML(
+    #               "<b>NYC Farmers Market Data : </b> <br>
+    #                             <li> In the past decade the number of farmers' markets in New York State has grown at a rapid rate. </li>
+    #                             <li> The dataset contains information detailing the time and location of community farmers' markets as well as the name and phone number of the market manager.</li>"
+    #             ),
+    #             
+    #             titlePanel("Credits : "),
+    #             HTML(
+    #               " <p>Our app was built using RShiny.</p>",
+    #               "<p>The following R packages were used in to build this RShiny application:</p>
+    #                               <p>
+    #                               <code>RCurl</code><code>dplyr</code><code>tibble</code>
+    #                               <code>leaflet</code><code>tidyverse</code><code>shinythemes</code>
+    #                               <code>tmap</code><code>plotly</code><code>ggplot2</code>
+    #                               <code>tigris</code><code>shiny</code><code>shinydashboard</code><code>sf</code><code>shinyWidgets</code>
+    #                               <code>tidyr</code><code>emojifont</code><code>viridis</code><code>readr</code><code>rgdal</code>
+    #                               </p>
+    #                               <p>This website is the result of 2021Spring GR5243 Project2 Group2, Class of 2021 of the M.A. Statistics program at Columbia University.</p>",
+    #               " <p>Chen,Pin-Chun     |email: pc2939@columbia.edu </p>",
+    #               " <p>Fang,Zi           |email: zf2258@columbia.edu </p>",
+    #               " <p>Gao,Catherine     |email: catherine.gao@columbia.edu </p>",
+    #               " <p>Sang,Siyuan       |email: ss6165@columbia.edu </p>",
+    #               " <p>Wu,Yingyao        |email: yw3659@columbia.edu </p>",
+    #               " <p>This page's template is credit to Fall 2020 Project2 Group1. </p>"
+    #             )
+    # )
+  )))
 
 
-               
+
+
+
+
