@@ -55,6 +55,12 @@ shinyUI(fluidPage(
                                           #                    selected = c(""))
                                           fluidPage(
                                             actionButton("covid_vaccination","Covid Vaccination",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("flu_vaccination","Flu Shot",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("wifi","Wifi Spot",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("food","Food Centers",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("drop_in","Drop In Centers",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("youth_drop_in","Youth Shelters",icon=icon("utensils",  lib = "font-awesome")),
+                                            actionButton("job","Job & Internship Centers",icon=icon("utensils",  lib = "font-awesome"))
                                           )
                                           )
 

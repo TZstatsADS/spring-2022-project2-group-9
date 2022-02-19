@@ -142,4 +142,156 @@ shinyServer(function(input, output, session) {
                             "<b>Type:</b>", covid_vaccination$Type, "<br>",
                             "<b>Vaccine offered:</b>", covid_vaccination$Vaccine_offered, "<br>"))
     })     
+    
+    #Flu vaccination Button
+    observeEvent(input$flu_vaccination, {
+      proxy <- leafletProxy("map", data = flu_vaccination)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = flu_vaccination) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "blue",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", flu_vaccination$Address,", ", flu_vaccination$ZIP.Code,  "<br>",
+                            "<b>For Children:</b>", flu_vaccination$Children, "<br>",
+                            "<b>Walk-in:</b>", flu_vaccination$Walk.in, "<br>"))
+    })
+    
+    
+    #Wifi Spot Button
+    observeEvent(input$wifi, {
+      proxy <- leafletProxy("map", data = wifi)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = wifi) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~LONGITUDE, ~LATITUDE, 
+                          icon = awesomeIcons(markerColor= "green",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", wifi$ADDRESS,", ", wifi$POSTCODE,  "<br>",
+                            "<b>Wifi Status:</b>", wifi$WIFI.STATUS, "<br>",
+                            "<b>Tablet Status:</b>", wifi$TABLET.STATUS, "<br>",
+                            "<b>Phone Status:</b>", wifi$PHONE.STATUS, "<br>"))
+    })
+    
+    
+    #Food Center Button
+    observeEvent(input$food, {
+      proxy <- leafletProxy("map", data = food)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = food) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "black",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", food$Address,", ", food$Zip.Code,  "<br>",
+                            "<b>Center Name:</b>", food$Name, "<br>",
+                            "<b>Contact Number:</b>", food$Contact, "<br>"
+                            ))
+    })
+    
+    
+    #Drop In Center Button
+    observeEvent(input$drop_in, {
+      proxy <- leafletProxy("map", data = drop_in)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = drop_in) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "purple",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", drop_in$Address,", ", drop_in$Postcode,  "<br>",
+                            "<b>Center Name:</b>", drop_in$Center.Name, "<br>"
+                          ))
+    })
+    
+    #Job Center Button
+    observeEvent(input$job, {
+      proxy <- leafletProxy("map", data = job)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = job) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "purple",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", job$Address,", ", job$Postcode,  "<br>",
+                            "<b>Agency:</b>", job$AGENCY, "<br>",
+                            "<b>Contact Number:</b>", job$Contact.Number, "<br>"
+                          ))
+    })
+    
+    #Youth Drop=in Button
+    observeEvent(input$youth_drop_in, {
+      proxy <- leafletProxy("map", data = youth_drop_in)
+      proxy %>% clearControls()
+      
+      # clear the map
+      # leafletProxy("map", data = covid_vaccination) %>%
+      #   clearShapes() %>%
+      #   clearMarkers() %>%
+      #   addProviderTiles("CartoDB.Voyager") %>%
+      #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+      
+      leafletProxy("map", data = youth_drop_in) %>%
+        clearMarkers() %>%
+        clearMarkerClusters() %>%
+        addAwesomeMarkers(~Longitude, ~Latitude, 
+                          icon = awesomeIcons(markerColor= "purple",
+                                              text = fa("syringe")),                                 
+                          popup = paste(
+                            "<b>Address:</b>", youth_drop_in$Number.and.Street.Address,", ", youth_drop_in$Postcode,  "<br>",
+                            "<b>Agency:</b>", youth_drop_in$AGENCY, "<br>",
+                            "<b>Contact Number:</b>", youth_drop_in$Contact.Number, "<br>"
+                          ))
+    })
+    
 })

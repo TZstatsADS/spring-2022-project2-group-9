@@ -30,7 +30,12 @@ library(numDeriv)
 ## NYC Outdoor Activity Data ###################################
 
 covid_vaccination = read.csv("../data/Covid_Vaccine.csv") 
-
+flu_vaccination = read.csv("../data/Seasonal_Flu_Vaccinations_location.csv") 
+wifi = read.csv("../data/LinkNYC_Kiosk_location.csv") 
+food = read.csv("../data/Food_Stamp_Centers_location.csv") 
+drop_in = read.csv("../data/Homeless_Drop-In_Centers_location.csv") 
+job = read.csv("../data/After_school_programs_Jobs_and_Internships.csv") 
+youth_drop_in = read.csv("../data/After_school_programs_Runaway_And_Homeless_Youth.csv") 
 
 ## Covid Confirmed Cases Data for map ###################################
 
