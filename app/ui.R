@@ -106,7 +106,7 @@ dashboardPage(
                           choices = c("7 day positive case count","cumulative cases","cumulative death"), 
                           selected = "people_positive"),
               
-              leafletOutput("map", width="100%", height=800)
+              leafletOutput("map", width="100%", height=600)
       )
       
       #     

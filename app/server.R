@@ -67,7 +67,7 @@ shinyServer(function(input, output, session) {
     map <- geo_data %>%
       select(-geometry) %>%
       leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
-      setView(-73.93, 40.80, zoom = 10) %>%
+      setView(-73.93, 40.70, zoom = 10) %>%
       addTiles() %>%
       addProviderTiles("CartoDB.Positron") %>%
       addPolygons(
@@ -107,12 +107,15 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(covid_vaccination)), function(i){
+                            paste0('Address: ',covid_vaccination[i, "Location"], '<br/>',
+                                   'Zipcode: ',covid_vaccination[i, "Zip_code"], '<br/>',
+                                   'Type: ',covid_vaccination[i, "Type"],'<br/>',
+                                   'Vaccine offered: ',covid_vaccination[i, "Vaccine_offered"]) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "lightred",
-                                            text = fa("syringe")), label= ~Name,                                  
-                        popup = paste(
-                          "<b>Address:</b>", covid_vaccination$Location,", ", covid_vaccination$Zip_code,  "<br>",
-                          "<b>Type:</b>", covid_vaccination$Type, "<br>",
-                          "<b>Vaccine offered:</b>", covid_vaccination$Vaccine_offered, "<br>"))
+                                            text = fa("syringe")))
   })     
   
   #Flu vaccination Button
@@ -131,12 +134,15 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(flu_vaccination)), function(i){
+                            paste0('Address: ',flu_vaccination[i, "Address"], '<br/>',
+                                   'Zipcode: ',flu_vaccination[i, "ZIP.Code"], '<br/>',
+                                   'Vaccine For Children: ',flu_vaccination[i, "Children"],'<br/>',
+                                   'Walk-in: ',flu_vaccination[i, "Walk.in"]) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "darkblue",
-                                            text = fa("syringe")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", flu_vaccination$Address,", ", flu_vaccination$ZIP.Code,  "<br>",
-                          "<b>For Children:</b>", flu_vaccination$Children, "<br>",
-                          "<b>Walk-in:</b>", flu_vaccination$Walk.in, "<br>"))
+                                            text = fa("syringe")))
   })
   
   
@@ -156,13 +162,15 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~LONGITUDE, ~LATITUDE, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(wifi)), function(i){
+                            paste0('Address: ',wifi[i, "ADDRESS"], '<br/>',
+                                   'Wifi Status: ',wifi[i, "WIFI.STATUS"], '<br/>',
+                                   'Tablet Status: ',wifi[i, "TABLET.STATUS"],'<br/>',
+                                   'Phone Status: ',wifi[i, "PHONE.STATUS"]) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "green",
-                                            text = fa("wifi")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", wifi$ADDRESS,", ", wifi$POSTCODE,  "<br>",
-                          "<b>Wifi Status:</b>", wifi$WIFI.STATUS, "<br>",
-                          "<b>Tablet Status:</b>", wifi$TABLET.STATUS, "<br>",
-                          "<b>Phone Status:</b>", wifi$PHONE.STATUS, "<br>"))
+                                            text = fa("wifi")))
   })
   
   
@@ -182,13 +190,16 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(food)), function(i){
+                            paste0('Address: ',food[i, "Address"], '<br/>',
+                                   'Center Name: ',food[i, "Name"], '<br/>',
+                                   'Contact Number: ',food[i, "Contact"],'<br/>'
+                                   ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "black",
-                                            text = fa("utensils")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", food$Address,", ", food$Zip.Code,  "<br>",
-                          "<b>Center Name:</b>", food$Name, "<br>",
-                          "<b>Contact Number:</b>", food$Contact, "<br>"
-                        ))
+                                            text = fa("utensils")))
+                      
   })
   
   
@@ -208,12 +219,15 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(drop_in)), function(i){
+                            paste0('Address: ',drop_in[i, "Address"], '<br/>',
+                                   'Zip Code: ',drop_in[i, "Postcode"], '<br/>',
+                                   'Center Name: ',drop_in[i, "Center.Name"],'<br/>'
+                            ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "orange",
-                                            text = fa("building")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", drop_in$Address,", ", drop_in$Postcode,  "<br>",
-                          "<b>Center Name:</b>", drop_in$Center.Name, "<br>"
-                        ))
+                                            text = fa("building")))
   })
   
   #Job Center Button
@@ -232,13 +246,16 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(job)), function(i){
+                            paste0('Address: ',job[i, "Address"], '<br/>',
+                                   'Zip Code: ',job[i, "AGENCY"], '<br/>',
+                                   'Agency: ',job[i, "Center.Name"],'<br/>',
+                                   'Contact Number: ',job[i, "Contact.Number"], '<br/>'
+                            ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "beige",
-                                            text = fa("briefcase")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", job$Address,", ", job$Postcode,  "<br>",
-                          "<b>Agency:</b>", job$AGENCY, "<br>",
-                          "<b>Contact Number:</b>", job$Contact.Number, "<br>"
-                        ))
+                                            text = fa("briefcase")))
   })
   
   #Youth Drop=in Button
@@ -257,13 +274,16 @@ shinyServer(function(input, output, session) {
       clearMarkers() %>%
       clearMarkerClusters() %>%
       addAwesomeMarkers(~Longitude, ~Latitude, 
+                        clusterOptions = markerClusterOptions(),
+                        label = lapply(
+                          lapply(seq(nrow(youth_drop_in)), function(i){
+                            paste0('Address: ',youth_drop_in[i, "Number.and.Street.Address"], '<br/>',
+                                   'Zip Code: ',drop_in[i, "Postcode"], '<br/>',
+                                   'Agency: ',youth_drop_in[i, "AGENCY"],'<br/>',
+                                   'Contact Number: ',youth_drop_in[i, "Contact.Number"], '<br/>'
+                            ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "purple",
-                                            text = fa("bed")),                                 
-                        popup = paste(
-                          "<b>Address:</b>", youth_drop_in$Number.and.Street.Address,", ", youth_drop_in$Postcode,  "<br>",
-                          "<b>Agency:</b>", youth_drop_in$AGENCY, "<br>",
-                          "<b>Contact Number:</b>", youth_drop_in$Contact.Number, "<br>"
-                        ))
+                                            text = fa("bed")))
   })
   
 })
