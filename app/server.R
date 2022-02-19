@@ -42,7 +42,10 @@ shinyServer(function(input, output, session) {
       data$people_positive
     } else if(input$choice == "cumulative cases") {
       data2$COVID_CASE_COUNT
-    } else {
+      }else if(input$choice == "crime"){
+        crime$CRIME_COUNT_2021
+      }
+      else {
       data2$COVID_DEATH_COUNT
     }
     
@@ -61,9 +64,34 @@ shinyServer(function(input, output, session) {
       "Cumulative deaths: ", data2$COVID_DEATH_COUNT,"<br/>",
       "Tested number:",data$people_tested,"<br/>",
       "<b>Infection Rate: ", perp_zipcode[nrow(perp_zipcode),],"%</b><br/>",
-      "Expected Infection Rate Next Week: ", predictions_perp,"%<br/>") %>%
+      "Crime count: ", crime$CRIME_COUNT_2021,";",crime$PRECINCT,"<br/>") %>%
+      #"Expected Infection Rate Next Week: ", predictions_perp,"%<br/>") %>%
       lapply(htmltools::HTML)
-    
+    # map <- crime %>%
+    #   select(the_geom) %>%
+    #   leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
+    #   setView(-73.93, 40.70, zoom = 10) %>%
+    #   addTiles() %>%
+    #   addProviderTiles("CartoDB.Positron") %>%
+    #   addPolygons(
+    #     fillColor = ~pal(parameter),
+    #     weight = 1,
+    #     opacity = .5,
+    #     color = "white",
+    #     dashArray = "2",
+    #     fillOpacity = 0.7,
+    #     highlight = highlightOptions(weight = 1,
+    #                                  color = "yellow",
+    #                                  dashArray = "",
+    #                                  fillOpacity = 0.7,
+    #                                  bringToFront = TRUE),
+    #     label = labels) %>%
+    #   addLegend(pal = pal, 
+    #             values = ~parameter,
+    #             opacity = 0.7, 
+    #             title = htmltools::HTML(input$radio),
+    #             position = "bottomright")
+    # 
     map <- geo_data %>%
       select(-geometry) %>%
       leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
@@ -90,7 +118,7 @@ shinyServer(function(input, output, session) {
                 position = "bottomright")
   })
   
-
+  
   #covid vaccination button
   observeEvent(input$covid_vaccination, {
     proxy <- leafletProxy("map", data = covid_vaccination)
@@ -196,10 +224,10 @@ shinyServer(function(input, output, session) {
                             paste0('Address: ',food[i, "Address"], '<br/>',
                                    'Center Name: ',food[i, "Name"], '<br/>',
                                    'Contact Number: ',food[i, "Contact"],'<br/>'
-                                   ) }), htmltools::HTML), 
+                            ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "black",
                                             text = fa("utensils")))
-                      
+    
   })
   
   
