@@ -102,7 +102,7 @@ dashboardPage(
               
               
               selectInput("choice",
-                          label = "case type/crime: ",
+                          label = "case type: ",
                           choices = c("7 day positive case count","cumulative cases","cumulative death", "crime"), 
                           selected = "people_positive"),
               

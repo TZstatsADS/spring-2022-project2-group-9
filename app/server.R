@@ -31,6 +31,8 @@ library(fontawesome)
 source("global.R")
 library(shinydashboard)
 
+
+
 shinyServer(function(input, output, session) {
   
   ## homepage box output #############################################
@@ -42,11 +44,10 @@ shinyServer(function(input, output, session) {
       data$people_positive
     } else if(input$choice == "cumulative cases") {
       data2$COVID_CASE_COUNT
-      }else if(input$choice == "crime"){
-        crime$CRIME_COUNT_2021
-      }
-      else {
+    } else if(input$choice == "cumulative deaths"){
       data2$COVID_DEATH_COUNT
+    } else{
+      crime$CRIME_COUNT_2021
     }
     
     #create palette  
@@ -56,69 +57,91 @@ shinyServer(function(input, output, session) {
     
     #create labels
     #Cleaned by emphasizing %Pos, case rate is other option
-    labels <- paste(
+    labels1 <- paste(
       data$zip, " - ",
       data$modzcta_name, "<br/>",
-      "Confirmed Cases: ", data$people_positive,"<br/>",
+      "Positive cases in last 7 days: ", data$people_positive,"<br/>",
       "Cumulative cases: ", data2$COVID_CASE_COUNT,"<br/>",
       "Cumulative deaths: ", data2$COVID_DEATH_COUNT,"<br/>",
       "Tested number:",data$people_tested,"<br/>",
-      "<b>Infection Rate: ", perp_zipcode[nrow(perp_zipcode),],"%</b><br/>",
-      "Crime count: ", crime$CRIME_COUNT_2021,";",crime$PRECINCT,"<br/>") %>%
-      #"Expected Infection Rate Next Week: ", predictions_perp,"%<br/>") %>%
+      "<b>Infection Rate: ", perp_zipcode[nrow(perp_zipcode),],"%</b><br/>") %>%
       lapply(htmltools::HTML)
-    # map <- crime %>%
-    #   select(the_geom) %>%
-    #   leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
-    #   setView(-73.93, 40.70, zoom = 10) %>%
-    #   addTiles() %>%
-    #   addProviderTiles("CartoDB.Positron") %>%
-    #   addPolygons(
-    #     fillColor = ~pal(parameter),
-    #     weight = 1,
-    #     opacity = .5,
-    #     color = "white",
-    #     dashArray = "2",
-    #     fillOpacity = 0.7,
-    #     highlight = highlightOptions(weight = 1,
-    #                                  color = "yellow",
-    #                                  dashArray = "",
-    #                                  fillOpacity = 0.7,
-    #                                  bringToFront = TRUE),
-    #     label = labels) %>%
-    #   addLegend(pal = pal, 
-    #             values = ~parameter,
-    #             opacity = 0.7, 
-    #             title = htmltools::HTML(input$radio),
-    #             position = "bottomright")
-    # 
-    map <- geo_data %>%
-      select(-geometry) %>%
-      leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
-      setView(-73.93, 40.70, zoom = 10) %>%
-      addTiles() %>%
-      addProviderTiles("CartoDB.Positron") %>%
-      addPolygons(
-        fillColor = ~pal(parameter),
-        weight = 1,
-        opacity = .5,
-        color = "white",
-        dashArray = "2",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(weight = 1,
-                                     color = "yellow",
-                                     dashArray = "",
-                                     fillOpacity = 0.7,
-                                     bringToFront = TRUE),
-        label = labels) %>%
-      addLegend(pal = pal, 
-                values = ~parameter,
-                opacity = 0.7, 
-                title = htmltools::HTML(input$radio),
-                position = "bottomright")
+    
+    labels2 <- paste0(
+      str_trim(shape$precinct), "-th", " Precinct",  "<br/>",
+      "Phone Number:", crime$Phone, "<br/>", 
+      crime$CRIME_COUNT_2021, " crime cases ", "(","Crime rate:",  crime$CRIME_RATE, ")", " throughout 2021:","<br/>", 
+      "- Murder: ",crime$MURDER, "<br/>", 
+      "- Robbery: ",crime$ROBBERY,"<br/>", 
+      "- Rape: ",crime$RAPE,"<br/>", 
+      "- Sex crimes: ",crime$SEX_CRIMES,"<br/>", 
+      "- Dangerous weapons: ",crime$DANGEROUS_WEAPONS,"<br/>", 
+      "- Dangerous Drugs: ",crime$DANGEROUS_DRUGS,"<br/>"
+      ) %>%
+      lapply(htmltools::HTML)
+  
+    if (input$choice == "crime"){
+      map <- shape %>%
+        select(geometry) %>%
+        leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
+        setView(-73.93, 40.70, zoom = 10) %>%
+        addTiles() %>%
+        addProviderTiles("CartoDB.Positron") %>%
+        addPolygons(
+          fillColor = ~pal(parameter),
+          weight = 1,
+          opacity = .5,
+          color = "white",
+          dashArray = "2",
+          fillOpacity = 0.7,
+          highlight = highlightOptions(weight = 1,
+                                       color = "yellow",
+                                       dashArray = "",
+                                       fillOpacity = 0.7,
+                                       bringToFront = TRUE),
+          label = labels2) %>%
+        addLegend(pal = pal,
+                  values = ~parameter,
+                  opacity = 0.7,
+                  title = htmltools::HTML(input$radio),
+                  position = "bottomright")
+    }
+    else{
+        map <- geo_data %>%
+          select(geometry) %>%
+          leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
+          setView(-73.93, 40.70, zoom = 10) %>%
+          addTiles() %>%
+          addProviderTiles("CartoDB.Positron") %>%
+          addPolygons(
+            fillColor = ~pal(parameter),
+            weight = 1,
+            opacity = .5,
+            color = "white",
+            dashArray = "2",
+            fillOpacity = 0.7,
+            highlight = highlightOptions(weight = 1,
+                                         color = "yellow",
+                                         dashArray = "",
+                                         fillOpacity = 0.7,
+                                         bringToFront = TRUE),
+            label = labels1) %>%
+          addLegend(pal = pal,
+                    values = ~parameter,
+                    opacity = 0.7,
+                    title = htmltools::HTML(input$radio),
+                    position = "bottomright")
+      }
+    
+    
+
+    
+    
+    
+    
   })
   
-  
+
   #covid vaccination button
   observeEvent(input$covid_vaccination, {
     proxy <- leafletProxy("map", data = covid_vaccination)
@@ -224,10 +247,10 @@ shinyServer(function(input, output, session) {
                             paste0('Address: ',food[i, "Address"], '<br/>',
                                    'Center Name: ',food[i, "Name"], '<br/>',
                                    'Contact Number: ',food[i, "Contact"],'<br/>'
-                            ) }), htmltools::HTML), 
+                                   ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "black",
                                             text = fa("utensils")))
-    
+                      
   })
   
   
