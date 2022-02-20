@@ -52,7 +52,7 @@ data2 <- read.csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/
 load("output/geo_data.RData")
 
 # crime data
-crime = read.csv("../data/crime_by_precinct.csv", encoding = "UTF-8") 
+crime_count = read.csv("../data/crime_by_precinct.csv", encoding = "UTF-8") 
 shape <-  read_sf('../data/Police Precincts/geo_export_bd71aa2e-95c8-494a-b0db-8f41326bf675.shp')
 
 ## case plot data ###################################
@@ -250,3 +250,78 @@ for(i in names(perp_zipcode)){
       return(1)
     }
   }
+  
+  
+  
+  
+### Statistical Analysis
+  
+  
+  
+  ########################Read data
+  
+  covid<-read.csv('../data/Covid.csv')
+  dhs<-read.csv('../data/DHS_Report.csv')
+  crime<-read.csv('../data/18_21_Crime.csv')
+  th<-read.csv('../data/Students_In_Temporary_Housing.csv')
+  li<-read.csv('../data/Housing_for_low_income.csv')
+  li_sum<-read.csv('../data/Summary_of_Housing.csv')
+  
+  
+  ###ALL VISUALIZATION WE WANT TO MAKE
+  ###Plots
+  ##Crime
+  #I. # of crime of all 3 years vs Covid data(explain? Covid cause lower crime?)
+  #II. <24 years,crime data by (UI:Borough, sex,race,crime type), vs Covid Data (Chose top 10)
+  ##Temporary Housing
+  #III. Connection between covid data, Housing for low income data and shelter data
+  #IV. 19-21 top 10 school with most temp housing (connect with covid data)
+  
+  ####I. # of crime of all 3 years vs Covid data(explain? Covid cause lower crime?)
+  crime$Date<-as.Date(crime$Date)
+  freq1<-crime%>%filter(Age_group %in% c('<18','18-24'))
+  freq1<-as.data.frame(table(freq1$Date))
+  freq2<-as.data.frame(table(crime$Date))
+  plotdf1<-cbind(freq1,freq2$Freq)
+  names(plotdf1)<-c('Date','Youth_crime','Total_crime')
+  plotdf1$Date<-as.Date(plotdf1$Date)
+  
+  plotdf1$Case_7_avg<-c(rep(0,752),covid$Case_7days_avg)
+  avg7<-function(data){
+    len<-length(data)
+    res<-c()
+    window<-c()
+    for (i in 1:len){
+      window<-c(window,data[i])
+      if (length(window)>7){
+        window<-window[-1]
+      }
+      res<-c(res,mean(window))
+    }
+    return(res)
+  }
+  plotdf1$Youth_7_avg<-avg7(plotdf1$Youth_crime)
+  plotdf1$All_7_avg<-avg7(plotdf1$Total_crime)
+  plotdf1$Case_7_avg[plotdf1$Case_7_avg>6000]<-6000 #For better graphing
+  
+  ####II. <24 years,crime data by (UI:Borough, sex,race,crime type), vs Covid Data (Chose top 10)
+  plotdf2<-crime%>%filter(Age_group %in% c('<18','18-24'))
+  
+  ####III. Connection between covid data and Housing for low income data
+  ###Low income people in shelters take 8% of population in shelters in NYC
+  cov_3<-covid%>%
+    select(Date,Daily_Case,Case_7days_avg)%>%
+    filter(Date<='2021-06-30')
+  plotdf3<-li%>%
+    group_by(Date)%>%
+    summarize(sum_li=sum(Low_income),sum_all=sum(Total))%>%
+    right_join(cov_3)%>%
+    arrange(Date)%>%
+    replace(.,is.na(.),0)%>%
+    mutate(cum_li=cumsum(sum_li),cum_all=cumsum(sum_all))
+  plotdf3$Date<-as.Date(plotdf3$Date)
+  
+  ####IV. 19-21 top n school with most temp housing(connect with covid data)
+  th_used<-th%>%select(School,Temp_Housing,Percentage,Year)
+  names(th_used)<-c("School","Count_of_Students","Percentage","Year")
+  

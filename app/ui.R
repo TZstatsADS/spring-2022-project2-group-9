@@ -23,10 +23,18 @@ dashboardPage(
   dashboardSidebar(sidebarMenu(
     menuItem("Home", tabName = "Home", icon = icon("home")),
     menuItem("NYC Interactive Map", tabName = "NYCMap", icon = icon("fas fa-globe-americas")),
-    menuItem("Crime Map", tabName = "CrimeMap", icon = icon("fas fa-globe-americas")),
-    menuItem("Analysis", tabName = "Analysis", icon = icon("fas fa-chart-area"),
-             menuSubItem("Crime", tabName = "Crime", icon = icon("fas fa-search")),
-             menuSubItem("Etc", tabName = "Etc", icon = icon("fas fa-chart-area"))),
+    # menuItem("Crime Map", tabName = "CrimeMap", icon = icon("fas fa-globe-americas")),
+    menuItem(
+      "Statistical Analysis",
+      tabName = "StatisticalAnalysis",
+      icon = icon("fas fa-shopping-cart"),
+      menuSubItem("Crime", tabName = "Crime", icon = icon("fas fa-search")),
+      menuSubItem(
+        "Infrastrucure",
+        tabName = "Infrastructure",
+        icon = icon("fas fa-chart-area")
+      )
+    ),
     #menuItem("About", tabName = "SafetyMap", icon = icon("fas fa-globe")),
     #menuItem("Neighborhood Analysis", tabName = "Neighborhood", icon = icon("fas fa-users")),
     #menuItem("Age Group Analysis", tabName = "Age", icon = icon("fas fa-chart-bar")),
@@ -107,159 +115,160 @@ dashboardPage(
                           selected = "people_positive"),
               
               leafletOutput("map", width="100%", height=600)
-      )
+      ), 
       
       #     
-      #     #------------------------------Grocery Map------------------------------------
+
+      #     #----------------------------Statistical Analysis------------------------------------
       #     
-      #     tabItem(tabName = "GroceryMap",
-      #             fluidPage(
-      #               fluidRow(
-      #                 width = 60,
-      #                 h1("Grocery Stores in NYC", align = "center")),
-      #               fluidRow(
-      #                 column(4,
-      #                        wellPanel(
-      #                          helpText("Select the range for zip code:"),
-      #                          sliderInput("Range", label = h3("Range"), min = 0, max = 10, value = 0),
-      #                          hr(),
-      #                          p("Current List of Zip Codes:", style = "color:#888888;"), 
-      #                          verbatimTextOutput("ranges_display")
-      #                          
-      #                        )),
-      #                 column(4,
-      #                        helpText("Select the zip code of your interest:"),
-      #                        selectInput("Zip Code", "Choose Zip Code", choices=nyc_only$Zip.Code)),
-      #                 column(4,
-      #                        helpText("", br(),
-      #                                 strong("Choose a zip code and range of your interest to search for safe stores to get your grocery."),
-      #                                 hr(),
-      #                                 "Example:", br(), "A zip code of 10002 and a range of 1 would search for stores in zip codes 10001, 10002, and 10003, the current stores with lowest case counts will be displayed in the following table.",
-      #                                 hr(),
-      #                                 "Note:", br(), "Only the current safest stores in NYC will be displayed.",
-      #                                 "", br()))
-      #               ),
-      #               br(),
-      #               br(),
-      #               #table
-      #               h2("Best Stores within Selected Range"),
-      #               DT::dataTableOutput("table1"), 
-      #               
-      #               # suppress error message
-      #               tags$style(type="text/css",
-      #                          ".shiny-output-error { visibility: hidden; }",
-      #                          ".shiny-output-error:before { visibility: hidden; }"
-      #               ),
-      #               # map
-      #               mainPanel(leafletOutput("grocery_map", height = 600), width = 12)
-      #             )),
+      tabItem(tabName = "Crime",
+              fluidPage(
+                # tab title
+                fluidRow(width = 60,
+                         h1("Crime status during COVID pandemic")),
+                wellPanel(style = "overflow-y:scroll; height: 850px; max-height: 750px;  background-color: #ffffff;",
+                          tabsetPanel(
+                            type = "tabs",
+                            tabPanel(
+                              "Visualization",
+                              # time series chart on average 7 day cases and crimes
+                              fluidRow(plotlyOutput("pcr1")),
+                              
+                              fluidRow(plotlyOutput("pcr2")),
+                              
+                              fluidRow(
+                                width = 15,
+                                h5(
+                                  "*The average 7 days COVID cases larger than 6000 are manually set as 6000 for better plotting."
+                                )
+                              ),
+                              
+                              fluidRow(
+                                width = 30,
+                                h3(
+                                  "We may see the 7-days average youth crime cases or all crime cases have the same trend, which would be like:"
+                                ),
+                                h3(
+                                  "1) At first the 7 Day average crimes seems to decrease, and it has a sudden drop for three times when COVID reached its peak and dropped simultaneously."
+                                ),
+                                h3(
+                                  "2) COVID remains stable in 2020 after the peak, but the Crime condition went to another peak(why?) and quickly dropped."
+                                )
+                              )
+                            ),
+                            tabPanel(
+                              "Detail",
+                              fluidRow(width =
+                                         30,
+                                       h3("Barplot of crimes for Specific groups")),
+                              # Barplot of crimes by Specific groups, top
+                              fluidRow(
+                                width = 30,
+                                selectInput(
+                                  "Borough",
+                                  label = "Select the Borough:",
+                                  choices = c(
+                                    'Bronx',
+                                    'Brooklyn',
+                                    'Manhattan',
+                                    'Queens',
+                                    'Staten Island',
+                                    'All'
+                                  ),
+                                  multiple = F,
+                                  selected = "All"
+                                )
+                              ),
+                              
+                              fluidRow(plotlyOutput("pcr3")),
+                              
+                              fluidRow(width =
+                                         30,
+                                       h3("Dataset")),
+                              dataTableOutput ('crime_data')
+                            )
+                          ))
+                
+              )),
+      
+      tabItem(tabName = "Infrastructure",
+              fluidPage(
+                # tab title
+                fluidRow(width = 60,
+                         h1(
+                           "Infrastructures status during COVID pandemic"
+                         )),
+                wellPanel(style = "overflow-y:scroll; height: 850px; max-height: 750px;  background-color: #ffffff;",
+                          tabsetPanel(
+                            type = "tabs",
+                            tabPanel(
+                              "Visualization",
+                              # time series charts on average 7 day cases, cumulative low income property units and children in shelters
+                              fluidRow(plotlyOutput("pth1")),
+                              
+                              fluidRow(plotlyOutput("pth2")),
+                              
+                              fluidRow(plotlyOutput("pth3")),
+                              
+                              fluidRow(
+                                width = 15,
+                                h5(
+                                  "*Covid data and Population in shelters data are selected from 01/03/2019 to 12/01/2021. The low income property units data ends in 06/30/2021, which accounts for the horizontal line after that day."
+                                )
+                              ),
+                              
+                              fluidRow(
+                                width = 30,
+                                h3(
+                                  "We may see the quantity of infrastructures in NYC kept increasing, and we can observe some interesting trend:"
+                                ),
+                                h3(
+                                  "1) Though it's not shown on the plot, A state of homelessness 2019 may cause the reduction of population in shelter, so we may see the general decreasing trend, though the COVID pandemic began in March 2020. But it may also result from the burst of COVID, and the government hoped people to be distanced from each other."
+                                ),
+                                h3(
+                                  "2) The total amount of low-income property units in NYC was generally increasing in this period. But we can see a rapid increase when COVID begins."
+                                ),
+                                h3(
+                                  "3) During the COVID pandemic, government continued offering property units, and we can see when COVID began the second peaking, the speed of constructing properties also increased."
+                                )
+                              )
+                            ),
+                            tabPanel(
+                              "Detail",
+                              fluidRow(
+                                width = 30,
+                                h3("Detailed data about schools with temporary housing students:")
+                              ),
+                              
+                              # Barplot of crimes by Specific groups, top
+                              fluidRow(
+                                width = 30,
+                                selectInput(
+                                  "Year",
+                                  label = "Select the year:",
+                                  choices = c(2019, 2020, 2021),
+                                  multiple = F,
+                                  selected = 2021
+                                )
+                              ),
+                              fluidRow(textOutput('covidcase')),
+                              
+                              fluidRow(plotlyOutput("pth4")),
+                              
+                              fluidRow(
+                                width = 30,
+                                h3("We may find when COVID lasts, the pipulation of students in temporary housing also seem to decrease.")
+                              ),
+                              
+                              fluidRow(width =
+                                         30,
+                                       h3("Dataset")),
+                              dataTableOutput('school_data')
+                            )
+                          ))
+                
+              ))
       #     
-      #     tabItem(tabName = "Summary",
-      #             fluidPage(
-      #               plotOutput("hist"),
-      #               br(),
-      #               br(),
-      #               h2("Stores with Lowest Cases", align = "center"),
-      #               DT::dataTableOutput("table2")
-      #             )),         
-      #     #------------------------------Safety Map------------------------------------
-      #     
-      #     tabItem(tabName = "SafetyMap",
-      #             fluidPage(
-      #               
-      #               fluidRow(
-      #                 width = 60,
-      #                 h1("NYC Shooting Statistics", align = "center")),
-      #               
-      #               mainPanel(leafletOutput("safetymap", height=600),
-      #                         br(),
-      #                         plotlyOutput("pie"), width=12)
-      #             )),         
-      #     
-      #     #----------------------------Neighborhood Analysis------------------------------------
-      #     
-      #     tabItem(tabName = "Neighborhood",
-      #             fluidPage(
-      #               
-      #               # tab title 
-      #               fluidRow(
-      #                 width = 60,
-      #                 h1("How Well Do You Know Your Borough During COVID?")),
-      #               
-      #               # create a drop down to select borough
-      #               fluidRow(
-      #                 width = 60, 
-      #                 selectInput("boroname", 
-      #                             label = "Select Your Borough", 
-      #                             choices = c('Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island'), 
-      #                             multiple = F, selected = "Bronx")),
-      #               
-      #               # create pie charts for selected borough
-      #               fluidRow(plotlyOutput("pie_chart")),
-      #               
-      #               # time series chart on boro's case count
-      #               fluidRow(plotlyOutput("time_series_plot"))
-      #               
-      #             )),
-      #     
-      #     
-      #     
-      #     #------------------------------------Age Group Analysis------------------------------------
-      #     
-      #     tabItem(tabName = "Age",
-      #             fluidPage(
-      #               
-      #               #title
-      #               fluidRow(
-      #                 width = 60,
-      #                 h1("What can we see from the age distribution of COVID-19?")),
-      #               
-      #               #The distribution of death by age
-      #               
-      #               fluidRow(plotlyOutput("count")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h2("Compared with the counts, would the rates give us a different tendency?")),
-      #               #Show the comparison of the rates
-      #               fluidRow(
-      #                 tabBox(
-      #                   # Title can include an icon
-      #                   title = tagList("COVID-19 Illness Rate by Disease Severity"),
-      #                   tabPanel("Case Rate",
-      #                            plotlyOutput("case_rate")
-      #                   ),
-      #                   tabPanel("Hospitalized Rate",plotlyOutput("hos_rate")),
-      #                   tabPanel("Death Rate",plotlyOutput("death_rate"))
-      #                   
-      #                 )),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h2("Results from the two groups of plots:")
-      #               ),                              
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3("Both the count and the rate suggest the old people are not easier to get COVID-19 compared with younger groups, but is this result totally reasonable?")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3("")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3("")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h2("Assumption: The survivor bias caused by the passive test policy can effect the data NYC collected")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3("Old people and kids should have a lower test rate as it can be harder for them to go to the test spots")),  
-      #               fluidRow(plotlyOutput("test_rate")),
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3(" ")),  
-      #               fluidRow(
-      #                 width = 60,
-      #                 h3("Besides, if the survivor bias exists, old people should have a lower positive rate because they're easier to get severe illness")), 
-      #               fluidRow(plotlyOutput("pos_rate"))
-      #             )),        
       #     
       #     
       #     #-------------------------------------Reference Page---------------------------------
