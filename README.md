@@ -17,7 +17,7 @@ The **learning goals** for this project is:
 
 *The above general statement about project 2 can be removed once you are finished with your project. It is optional.
 
-## [Struggling Youth](https://ads-project2.shinyapps.io/strugglingyouth/?_ga=2.45121124.1775183580.1644956162-202624139.1644956162)
+## Struggling Youth
 Term: Spring 2022
 
 + Team #9
@@ -27,6 +27,8 @@ Term: Spring 2022
 	+ Xile Zhang
 	+ Yvonne Zha
 	+ Sharon Meng
+
+Click here and approach to our [Shiny app](https://ads-project2.shinyapps.io/strugglingyouth/?_ga=2.45121124.1775183580.1644956162-202624139.1644956162)!
 
 + **Project summary**: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
