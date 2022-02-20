@@ -23,7 +23,7 @@ Term: Spring 2022
 + Team #9
 + **Projec title**: Struggling Youth
 + + Team members:
-	+ Rhea Salbani
+	+ Rhea Sablani
 	+ Xile Zhang
 	+ Yvonne Zha
 	+ Sharon Meng
