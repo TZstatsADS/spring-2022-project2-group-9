@@ -17,11 +17,11 @@ The **learning goals** for this project is:
 
 *The above general statement about project 2 can be removed once you are finished with your project. It is optional.
 
-## Struggling Youth
+## [Struggling Youth](https://ads-project2.shinyapps.io/strugglingyouth/?_ga=2.45121124.1775183580.1644956162-202624139.1644956162)
 Term: Spring 2022
 
 + Team #9
-+ **Projec title**: Struggling Youth
++ **Struggling Youth**
 + + Team members:
 	+ Rhea Sablani
 	+ Xile Zhang
