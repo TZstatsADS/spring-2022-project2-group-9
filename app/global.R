@@ -1,5 +1,9 @@
 packages.used <- c("shiny","leaflet","ggplot2","tidyr","tibble","tidyverse","shinythemes",
-                   "shinydashboard","sf","jsonlite","gganimate","magick","plotly","dplyr","numDeriv")
+<<<<<<< HEAD
+                   "shinydashboard","sf","jsonlite","gganimate","magick","plotly","dplyr","numDeriv","DT","stringr")
+=======
+                   "shinydashboard","sf","jsonlite","gganimate","magick","plotly","dplyr","numDeriv","DT")
+>>>>>>> 13a2db5c09df9991b0ac7cf2939ca2a0eafc6169
 
 # check packages that need to be installed.
 packages.needed <- setdiff(packages.used, 
@@ -26,7 +30,11 @@ library(magick)
 library(plotly)
 library(dplyr)
 library(numDeriv)
-library(sf)
+library(DT)
+<<<<<<< HEAD
+library(stringr)
+=======
+>>>>>>> 13a2db5c09df9991b0ac7cf2939ca2a0eafc6169
 
 ## NYC Outdoor Activity Data ###################################
 
@@ -306,6 +314,21 @@ for(i in names(perp_zipcode)){
   
   ####II. <24 years,crime data by (UI:Borough, sex,race,crime type), vs Covid Data (Chose top 10)
   plotdf2<-crime%>%filter(Age_group %in% c('<18','18-24'))
+  
+  crimedf<-crime%>%filter(Crime%in%c('BURGLARY','FELONY ASSAULT','GRAND LARCENY',"ROBBERY"),Age_group%in%c('<18','18-24'),Date>='2019-01-01')
+  crimedf<-as.data.frame(table(crimedf$Year,crimedf$Month,crimedf$Crime))
+  names(crimedf)<-c("Year","Month","Crime",'Count')
+  crimedf$Date<-as.Date(paste0(crimedf$Year,'-',crimedf$Month,'-01'))
+  crimedf<-crimedf%>%select(Date,Crime,Count)%>%arrange(Date)
+  
+  covdf3<-covid[,c(15,17,2)]
+  names(covdf3)<-c('Year','Month','DailyCase')
+  covdf3<-covdf3%>%group_by(Year,Month)%>%summarize(Count=sum(DailyCase))%>%filter(Year<2022)
+  tp<-data.frame(Year=c(rep(2019,12),2020),Month=c(seq(1,12,1),1),Count=rep(0,13))
+  covdf3<-rbind(tp,covdf3)
+  covdf3$Date<-as.Date(paste0(covdf3$Year,'-',covdf3$Month,'-01'))
+  covdf3<-covdf3%>%select(Date,Count)
+  
   
   ####III. Connection between covid data and Housing for low income data
   ###Low income people in shelters take 8% of population in shelters in NYC

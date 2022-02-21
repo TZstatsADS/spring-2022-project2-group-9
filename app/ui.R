@@ -111,7 +111,7 @@ dashboardPage(
               
               selectInput("choice",
                           label = "case type: ",
-                          choices = c("7 day positive case count","cumulative cases","cumulative death", "crime"), 
+                          choices = c("7 days positive case count","Cumulative cases","Cumulative death", "Crime"), 
                           selected = "people_positive"),
               
               leafletOutput("map", width="100%", height=600)
@@ -131,6 +131,14 @@ dashboardPage(
                             type = "tabs",
                             tabPanel(
                               "Visualization",
+                              
+                              fluidRow(
+                                width = 15,
+                                h2(
+                                  "COVID cases v.s. Overall crime cases:"
+                                )
+                              ),
+                              
                               # time series chart on average 7 day cases and crimes
                               fluidRow(plotlyOutput("pcr1")),
                               
@@ -144,15 +152,49 @@ dashboardPage(
                               ),
                               
                               fluidRow(
+                                width = 15,
+                                h2(
+                                  "COVID cases v.s. Special crime cases:"
+                                )
+                              ),
+                              
+                              fluidRow(
+                                width = 30,
+                                selectInput(
+                                  "CrimeType",
+                                  label = "Select the crime type:",
+                                  choices = c(
+                                    'Burglary',
+                                    'Felony Assault',
+                                    'Grand Larceny',
+                                    'Robbery'
+                                  ),
+                                  multiple = F,
+                                  selected = "Burglary"
+                                )
+                              ),
+                              
+                              fluidRow(plotlyOutput("pcr3")),
+                              
+                              fluidRow(
+                                width = 15,
+                                h5(
+                                  "*The Monthly COVID cases of December, 2021 is manually set as 200k for better plotting, The actual cases is 503,737."
+                                )
+                              ),
+                              
+                              fluidRow(
                                 width = 30,
                                 h3(
                                   "We may see the 7-days average youth crime cases or all crime cases have the same trend, which would be like:"
                                 ),
-                                h3(
-                                  "1) At first the 7 Day average crimes seems to decrease, and it has a sudden drop for three times when COVID reached its peak and dropped simultaneously."
+                                HTML(
+                                  "<h4>1) At first the 7 Day average crimes seems to decrease, and it has a sudden drop for three times when COVID reached its peak and dropped simultaneously. We may say the burst of COVID caused a decrease for crime in NYC, and you can check related news <a href='https://www1.nyc.gov/site/nypd/news/p0106a/overall-crime-new-york-city-reaches-record-low-2020' target='_blank'>here</a>. However, one thing that we can't ignore is some upticks in burglaries, felony assaults and grand larcenies in 2020, which also continues in 2021.<h4>"
                                 ),
-                                h3(
-                                  "2) COVID remains stable in 2020 after the peak, but the Crime condition went to another peak(why?) and quickly dropped."
+                                h4(
+                                  "2) COVID remains stable in 2020 after the peak, but the crime condition went to another peak because of the burst of burglaries, and then quickly dropped."
+                                ),
+                                h4("We may come up with the conclusion that though COVID may cause crime drops so that police departments may have a lighter pressure for the crime, the thing they still need to pay attention to is the robbery, larceny, assault and burglary."
                                 )
                               )
                             ),
@@ -160,7 +202,7 @@ dashboardPage(
                               "Detail",
                               fluidRow(width =
                                          30,
-                                       h3("Barplot of crimes for Specific groups")),
+                                       h3("Pie charts of crime details in specific areas")),
                               # Barplot of crimes by Specific groups, top
                               fluidRow(
                                 width = 30,
@@ -180,7 +222,7 @@ dashboardPage(
                                 )
                               ),
                               
-                              fluidRow(plotlyOutput("pcr3")),
+                              fluidRow(plotlyOutput("pcr4")),
                               
                               fluidRow(width =
                                          30,
@@ -220,16 +262,22 @@ dashboardPage(
                               fluidRow(
                                 width = 30,
                                 h3(
-                                  "We may see the quantity of infrastructures in NYC kept increasing, and we can observe some interesting trend:"
+                                  "We may see the quantity of infrastructures in NYC kept increasing, and we can observe some interesting trends:"
                                 ),
-                                h3(
-                                  "1) Though it's not shown on the plot, A state of homelessness 2019 may cause the reduction of population in shelter, so we may see the general decreasing trend, though the COVID pandemic began in March 2020. But it may also result from the burst of COVID, and the government hoped people to be distanced from each other."
+                                h4(
+                                  "1) Though maybe it's not shown on the plot, some policies and open documents, such as the COVID-19 Eviction Protections for Tenants and A state of homelessness 2019 may cause the reduction of population in shelter, so we may see the general decreasing trend, though the COVID pandemic began in March 2020. But the fears of getting infected by COVID in the shelters is also another possible reason for the homeless not to apply for shelter beds."
                                 ),
-                                h3(
+                                HTML(
+                                  " <p> If you are interested, please check: <a href='https://bkreader.com/2021/09/24/nyc-shelter-population-declined-during-pandemic-but-problems-persist-for-homeless/' target='_blank'>NYC Shelter Population Declined During Pandemic, But Problems Persist For Homeless</a> and <a href='https://www.coalitionforthehomeless.org/press/state-of-the-homeless-2019/#:~:text=The%20report%20finds%20that%20policy,York%20City%20shelters%20each%20night.' target='_blank'>State of the Homeless 2019</a>.</p>",  
+                                ),
+                                h4(
                                   "2) The total amount of low-income property units in NYC was generally increasing in this period. But we can see a rapid increase when COVID begins."
                                 ),
-                                h3(
-                                  "3) During the COVID pandemic, government continued offering property units, and we can see when COVID began the second peaking, the speed of constructing properties also increased."
+                                h4(
+                                  "3) During the COVID pandemic, government continued offering property units, and we can see when COVID began the second peak, the speed of constructing properties also increased."
+                                ),
+                                HTML(
+                                  "<h4>Generally, we can conclude that the acts government made in this COVID pandemic for the homeless and the youth are quite effective and influential, but it's still not the perfect resolution in the long run. A small effort from everyone in this city will be a huge contribution to them. You can click <a href='https://thebridgefund.org/2016/06/05/eviction-hits-children-most/?gclid=CjwKCAiA6seQBhAfEiwAvPqu15-RSRC-GF-6zSNlrCNlvcn5-HUAMV0TeU3JNVcA5o-r_XQ-oOz_NxoCDG4QAvD_BwE' target='_blank'>here</a> for more information to help.<h4>"
                                 )
                               )
                             ),
@@ -257,7 +305,7 @@ dashboardPage(
                               
                               fluidRow(
                                 width = 30,
-                                h3("We may find when COVID lasts, the pipulation of students in temporary housing also seem to decrease.")
+                                h3("We may find when COVID lasts, the population of students in temporary housing also seem to decrease.")
                               ),
                               
                               fluidRow(width =
