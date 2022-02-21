@@ -118,7 +118,7 @@ dashboardPage(
       ), 
       
       #     
-
+      
       #     #----------------------------Statistical Analysis------------------------------------
       #     
       tabItem(tabName = "Crime",
@@ -267,10 +267,47 @@ dashboardPage(
                             )
                           ))
                 
-              ))
+              )),
       #     
       #     
-      #     
+      tabItem(tabName='About',
+              HTML(
+                "<h2> Data Sources : </h2>
+                                  <h4><li><a href='https://github.com/nychealth/coronavirus-data' target='_blank'>NYC Covid Data</a></li></h4> 
+                                  <h4><li><a href='https://www1.nyc.gov/site/doh/covid/covid-19-data-vaccines.page' target='_blank'>NYC Covid Vaccination Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/Health/New-York-City-Locations-Providing-Seasonal-Flu-Vac/w9ei-idxz' target='_blank'>NYC Flu Shot Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/City-Government/LinkNYC-Kiosk-Status/n6c5-95xh' target='_blank'>NYC Wifi Spots Data</a></li></h4>
+                                  <h4><li><a href='https://www1.nyc.gov/site/hra/locations/snap-locations.page' target='_blank'>NYC Food Centers Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/Social-Services/Directory-Of-Homeless-Drop-In-Centers/bmxf-3rd4' target='_blank'>NYC Drop in Centers Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/Social-Services/DYCD-RHY-Runaway-and-Homeless-Youth-Services/h682-ywyg' target='_blank'>NYC Youth Shelters Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/Education/DYCD-after-school-programs-Jobs-and-Internships/99br-frp6' target='_blank'>NYC Jobs & Internships Data</a></li></h4>
+                                  <h4><li><a href='https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc' target='_blank'>NYPD Arrest Data</a></li></h4>"
+              ),
+              titlePanel("Data Disclaimer : "),
+              HTML(
+                " <p> The linked data is subject to change as it is updated by its sources. </p>",  
+              ),
+              titlePanel("Credits : "),
+              HTML(
+                " <p>Our app was built using RShiny.  </p>",
+                "<p>The following R packages were used to build this RShiny application:</p>
+                                    <p>
+                                    <code>shiny</code><code>dplyr</code><code>tidyverse</code>
+                                    <code>DT</code><code>ggplot2</code><code>lubridate</code>
+                                    <code>plotly</code><code>hrbrthemes</code><code>hrbrthemes</code>
+                                    <code>highcharter</code><code>RColorBrewer</code><code>shinydashboard</code><code>shinyWidgets</code>
+                                    <code>geogsonio</code><code>leaflet</code><code>fontawesome</code>
+                                    </p>
+                                    <p>This was a project for the Applied Data Science Class at Columbia University.</p>"),
+              titlePanel("Contributors : "),
+              HTML(
+                " <p>Meng, Sharon       |email: zm2380@columbia.edu </p>",
+                " <p>Sablani, Rhea      |email: rss2229@columbia.edu </p>",
+                " <p>Zha, Yvonne        |email: lz2806@columbia.edu </p>",
+                " <p>Zhang, Xile        |email: xz2985@columbia.edu </p>",
+                " <p>The inspiration and template for this page can be credited to Fall 2020 Project2 Group1. </p>"
+              )
+                   
       #     #-------------------------------------Reference Page---------------------------------
       #     tabItem(tabName = "About", 
       #             HTML(
@@ -325,5 +362,5 @@ dashboardPage(
       #               " <p>Wu,Yingyao        |email: yw3659@columbia.edu </p>",
       #               " <p>This page's template is credit to Fall 2020 Project2 Group1. </p>"
       #             )
-      # )
+       )
     )))
