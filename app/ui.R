@@ -341,7 +341,7 @@ dashboardPage(
                 "<p>The following R packages were used to build this RShiny application:</p>
                                     <p>
                                     <code>shiny</code><code>dplyr</code><code>tidyverse</code>
-                                    <code>DT</code><code>ggplot2</code><code>lubridate</code>
+                                    <code>DT</code><code>ggplot2</code><code>lubridate</code><code>stringr</code>
                                     <code>plotly</code><code>hrbrthemes</code><code>hrbrthemes</code>
                                     <code>highcharter</code><code>RColorBrewer</code><code>shinydashboard</code><code>shinyWidgets</code>
                                     <code>geogsonio</code><code>leaflet</code><code>fontawesome</code>
