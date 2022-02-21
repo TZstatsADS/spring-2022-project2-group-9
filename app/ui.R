@@ -30,7 +30,7 @@ dashboardPage(
       icon = icon("fas fa-shopping-cart"),
       menuSubItem("Crime", tabName = "Crime", icon = icon("fas fa-search")),
       menuSubItem(
-        "Infrastrucure",
+        "Infrastructure",
         tabName = "Infrastructure",
         icon = icon("fas fa-chart-area")
       )
