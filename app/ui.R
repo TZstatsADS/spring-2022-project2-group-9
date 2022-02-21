@@ -111,7 +111,7 @@ dashboardPage(
               
               selectInput("choice",
                           label = "case type: ",
-                          choices = c("7 day positive case count","cumulative cases","cumulative death", "crime"), 
+                          choices = c("7 days positive case count","Cumulative cases","Cumulative death", "Crime"), 
                           selected = "people_positive"),
               
               leafletOutput("map", width="100%", height=600)
@@ -257,7 +257,7 @@ dashboardPage(
                               
                               fluidRow(
                                 width = 30,
-                                h3("We may find when COVID lasts, the pipulation of students in temporary housing also seem to decrease.")
+                                h3("We may find when COVID lasts, the population of students in temporary housing also seem to decrease.")
                               ),
                               
                               fluidRow(width =

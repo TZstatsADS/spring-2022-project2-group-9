@@ -40,11 +40,11 @@ shinyServer(function(input, output, session) {
   ## map output #############################################
   output$map <- renderLeaflet({
     #covid cases parameters
-    parameter <- if(input$choice == "7 day positive case count") {
+    parameter <- if(input$choice == "7 days positive case count") {
       data$people_positive
-    } else if(input$choice == "cumulative cases") {
+    } else if(input$choice == "Cumulative cases") {
       data2$COVID_CASE_COUNT
-    } else if(input$choice == "cumulative deaths"){
+    } else if(input$choice == "Cumulative deaths"){
       data2$COVID_DEATH_COUNT
     } else{
       crime_count$CRIME_COUNT_2021
@@ -80,7 +80,7 @@ shinyServer(function(input, output, session) {
       ) %>%
       lapply(htmltools::HTML)
   
-    if (input$choice == "crime"){
+    if (input$choice == "Crime"){
       map <- shape %>%
         select(geometry) %>%
         leaflet(options = leafletOptions(minZoom = 8, maxZoom = 18)) %>%
@@ -558,12 +558,13 @@ shinyServer(function(input, output, session) {
   })
   
   #For filtering schools
-  #school_data$School<-factor(school_data$School) #Don't comment out or the barplot will go strange
+  school_data2<-school_data
+  school_data2$School<-factor(school_data2$School) #Don't comment out or the barplot will go strange
   
   ###Output the data of schools 
   output$school_data<- renderDataTable({
     datatable(
-      data = school_data,
+      data = school_data2,
       selection = 'multiple',
       filter = "top",
       rownames = FALSE,

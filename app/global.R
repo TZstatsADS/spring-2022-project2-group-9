@@ -1,5 +1,5 @@
 packages.used <- c("shiny","leaflet","ggplot2","tidyr","tibble","tidyverse","shinythemes",
-                   "shinydashboard","sf","jsonlite","gganimate","magick","plotly","dplyr","numDeriv")
+                   "shinydashboard","sf","jsonlite","gganimate","magick","plotly","dplyr","numDeriv","DT")
 
 # check packages that need to be installed.
 packages.needed <- setdiff(packages.used, 
@@ -26,7 +26,7 @@ library(magick)
 library(plotly)
 library(dplyr)
 library(numDeriv)
-library(sf)
+library(DT)
 
 ## NYC Outdoor Activity Data ###################################
 
