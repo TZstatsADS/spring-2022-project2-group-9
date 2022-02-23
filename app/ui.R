@@ -27,12 +27,11 @@ dashboardPage(
     menuItem(
       "Statistical Analysis",
       tabName = "StatisticalAnalysis",
-      icon = icon("fas fa-shopping-cart"),
-      menuSubItem("Crime", tabName = "Crime", icon = icon("fas fa-search")),
+      icon = icon("fas fa-chart-area"),
+      menuSubItem("Crime", tabName = "Crime"),
       menuSubItem(
-        "Infrastructure",
-        tabName = "Infrastructure",
-        icon = icon("fas fa-chart-area")
+        "Housing",
+        tabName = "Housing"
       )
     ),
     menuItem("About", tabName = "About", icon = icon("fas fa-asterisk"))
@@ -119,8 +118,8 @@ dashboardPage(
               
               selectInput("choice",
                           label = "case type: ",
-                          choices = c("7 days positive case count","Cumulative cases","Cumulative death", "Crime"), 
-                          selected = "people_positive"),
+                          choices = c("7 days positive case count","cumulative cases","cumulative death", "crime"), 
+                          selected = "7 days positive case count"),
               
               leafletOutput("map", width="100%", height=600)
       ), 
@@ -241,12 +240,12 @@ dashboardPage(
                 
               )),
       
-      tabItem(tabName = "Infrastructure",
+      tabItem(tabName = "Housing",
               fluidPage(
                 # tab title
                 fluidRow(width = 60,
                          h1(
-                           "Infrastructures status during COVID pandemic"
+                           "Housing status during COVID pandemic"
                          )),
                 wellPanel(style = "overflow-y:scroll; height: 850px; max-height: 750px;  background-color: #ffffff;",
                           tabsetPanel(
@@ -254,9 +253,9 @@ dashboardPage(
                             tabPanel(
                               "Visualization",
                               # time series charts on average 7 day cases, cumulative low income property units and children in shelters
-                              fluidRow(plotlyOutput("pth1")),
-                              
                               fluidRow(plotlyOutput("pth2")),
+                              
+                              fluidRow(plotlyOutput("pth1")),
                               
                               fluidRow(plotlyOutput("pth3")),
                               
@@ -270,22 +269,22 @@ dashboardPage(
                               fluidRow(
                                 width = 30,
                                 h3(
-                                  "We may see the quantity of infrastructures in NYC kept increasing, and we can observe some interesting trends:"
+                                  "We may see the dramatical drop of population in shelter in pandemic period, and here are some possible reasons:"
                                 ),
                                 h4(
-                                  "1) Though maybe it's not shown on the plot, some policies and open documents, such as the COVID-19 Eviction Protections for Tenants and A state of homelessness 2019 may cause the reduction of population in shelter, so we may see the general decreasing trend, though the COVID pandemic began in March 2020. But the fears of getting infected by COVID in the shelters is also another possible reason for the homeless not to apply for shelter beds."
+                                  "1) The total amount of low-income units, which are affordable housing resources offered by NYC government for the low-income population, was continuously increasing in this period. And we can see a rapid increase when COVID began and after COVID reached the second peak. The aim of this housing program is to help the homeless move out of shelters into permanent housing."
+                                ),
+                                h4(
+                                  "2) Though it's not shown on the plot, some policies, such as COVID-19 Eviction Protections for Tenants, which protects New Yorkers from eviction for failing to pay their rent if they suffer a financial hardship due to COVID-19, may cause the reduction of population in shelter. In addition, the fears of getting infected by COVID in shelters is another possible reason for the homeless not to apply for shelter beds."
                                 ),
                                 HTML(
                                   " <p> If you are interested, please check: <a href='https://bkreader.com/2021/09/24/nyc-shelter-population-declined-during-pandemic-but-problems-persist-for-homeless/' target='_blank'>NYC Shelter Population Declined During Pandemic, But Problems Persist For Homeless</a> and <a href='https://www.coalitionforthehomeless.org/press/state-of-the-homeless-2019/#:~:text=The%20report%20finds%20that%20policy,York%20City%20shelters%20each%20night.' target='_blank'>State of the Homeless 2019</a>.</p>",  
                                 ),
-                                h4(
-                                  "2) The total amount of low-income property units in NYC was generally increasing in this period. But we can see a rapid increase when COVID begins."
-                                ),
-                                h4(
-                                  "3) During the COVID pandemic, government continued offering property units, and we can see when COVID began the second peak, the speed of constructing properties also increased."
-                                ),
+                                # h4(
+                                #   "3) During the COVID pandemic, government continued offering property units, and we can see when COVID began the second peak, the speed of constructing properties also increased."
+                                # ),
                                 HTML(
-                                  "<h4>Generally, we can conclude that the acts government made in this COVID pandemic for the homeless and the youth are quite effective and influential, but it's still not the perfect resolution in the long run. A small effort from everyone in this city will be a huge contribution to them. You can click <a href='https://thebridgefund.org/2016/06/05/eviction-hits-children-most/?gclid=CjwKCAiA6seQBhAfEiwAvPqu15-RSRC-GF-6zSNlrCNlvcn5-HUAMV0TeU3JNVcA5o-r_XQ-oOz_NxoCDG4QAvD_BwE' target='_blank'>here</a> for more information to help.<h4>"
+                                  "<h4>Generally, we can conclude that the aid government give in this COVID pandemic for the homeless including homeless youth are quite effective and influential, but it's still not the perfect resolution in the long run. A small effort from everyone in this city will be a huge contribution to them. You can click <a href='https://thebridgefund.org/2016/06/05/eviction-hits-children-most/?gclid=CjwKCAiA6seQBhAfEiwAvPqu15-RSRC-GF-6zSNlrCNlvcn5-HUAMV0TeU3JNVcA5o-r_XQ-oOz_NxoCDG4QAvD_BwE' target='_blank'>here</a> for more information to help.<h4>"
                                 )
                               )
                             ),
@@ -311,10 +310,10 @@ dashboardPage(
                               
                               fluidRow(plotlyOutput("pth4")),
                               
-                              fluidRow(
-                                width = 30,
-                                h3("We may find when COVID lasts, the population of students in temporary housing also seem to decrease.")
-                              ),
+                              # fluidRow(
+                              #   width = 30,
+                              #   h3("We may find when COVID lasts, the population of students in temporary housing also seem to decrease.")
+                              # ),
                               
                               fluidRow(width =
                                          30,

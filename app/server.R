@@ -332,8 +332,8 @@ shinyServer(function(input, output, session) {
                         label = lapply(
                           lapply(seq(nrow(job)), function(i){
                             paste0('Address: ',job[i, "Address"], '<br/>',
-                                   'Zip Code: ',job[i, "AGENCY"], '<br/>',
-                                   'Agency: ',job[i, "Center.Name"],'<br/>',
+                                   'AGENCY: ',job[i, "AGENCY"], '<br/>',
+                                   'Program: ',job[i, "PROGRAM"],'<br/>',
                                    'Contact Number: ',job[i, "Contact.Number"], '<br/>'
                             ) }), htmltools::HTML), 
                         icon = awesomeIcons(markerColor= "beige",
@@ -407,6 +407,37 @@ shinyServer(function(input, output, session) {
   
   output$pcr2<-renderPlotly(pcr2)
   
+  #crimedf:144*3,covdf3:36*2
+  #'BURGLARY','FELONY ASSAULT','GRAND LARCENY',"ROBBERY"
+  #For plotting, manually set Dec 2021 has 200k covid cases
+  covdf3[36,2]<-200000
+  crimeInput <- reactive({
+    switch(input$CrimeType,
+           "Burglary"="BURGLARY",
+           "Felony Assault"="FELONY ASSAULT",             
+           "Grand Larceny"="GRAND LARCENY",            
+           "Robbery"="ROBBERY"
+    )
+  })
+  
+  output$pcr3<-renderPlotly({
+    y_2<-list(overlaying='y',side='right',title='Monthly Crime cases')
+    pcr3<-plot_ly(data=covdf3,x=~Date,y=~Count,name='Monthly COVID Cases',type='scatter',mode='lines',line=list(color='red',dash='dash'))
+    pcr3<-pcr3%>%add_lines(data=crimedf%>%filter(Crime==crimeInput()),x=~Date,y=~Count,name=str_to_title(crimeInput()),yaxis='y2',line=list(color='blue',dash='dot'))
+    pcr3%>%layout(
+      font=list(size=14,color='grey'),
+      title=list(text="Crime Cases of Special Category and Covid Cases by Month",font=list(size=24,color='grey')),
+      paper_bgcolor='transparent',
+      xaxis=list(title='Date',showgrid=F),
+      yaxis=list(title='COVID Cases by Month',showgrid=F),
+      yaxis2=y_2,
+      margin=list(t=80,b=0,r=80,autoexpand=T),
+      legend=list(x=0.5,y=1,bordercolor='grey',borderwidth=1))
+  })
+  
+  
+  
+  
   #Summary the crime data and draw bar plots
   crime_data<-plotdf2%>%select(Date,Crime,Borough,Sex,Race)
   crime_data$Sex[crime_data$Sex=='M']<-'Male'
@@ -426,7 +457,7 @@ shinyServer(function(input, output, session) {
            "All"='All')
   })
   
-  output$pcr3<-renderPlotly({
+  output$pcr4<-renderPlotly({
     if (boroughInput()!='All'){
       dt3<-crime_data%>%
         filter(Borough==boroughInput())%>%
@@ -461,6 +492,7 @@ shinyServer(function(input, output, session) {
       options = list(scrollX=TRUE,scrollY=TRUE,pageLength = 10)
     )
   })
+  
   
   ##############Temporary Housing
   
