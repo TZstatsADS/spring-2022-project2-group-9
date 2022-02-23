@@ -2,7 +2,11 @@
 
 ### [Project Description](doc/project2_desc.md)
 
-(ADD SCREENSHOTS HERE)
+![screenshot](doc/figs/map.jpg)
+
+![screenshot](doc/figs/Visual1.jpg)
+
+![screenshot](doc/figs/visual2.jpg)
 
 ## Helping NYC Youth during COVID
 
