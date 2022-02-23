@@ -44,7 +44,7 @@ shinyServer(function(input, output, session) {
       value = tags$p(prettyNum(1054514, big.mark = ","), style = "font-size: 200%;"),
       icon = icon("fas fa-chart-area"),
       fill = T,
-      color = "yellow")
+      color = "light-blue")
   })
   
   output$student_temphouse <- renderInfoBox({
@@ -56,7 +56,7 @@ shinyServer(function(input, output, session) {
       value = tags$p(prettyNum(86915, big.mark = ","), style = "font-size: 200%;"),
       icon = icon("fas fa-bed"),
       fill = T,
-      color = "yellow")
+      color = "blue")
   })
   
   output$crime_no <- renderInfoBox({
@@ -65,7 +65,7 @@ shinyServer(function(input, output, session) {
       value = tags$p(prettyNum(33727, big.mark = ","), style = "font-size: 200%;"),
       icon = icon("fas fa-exclamation"),
       fill = T,
-      color = "yellow")
+      color = "aqua")
   })
   
   ## map output #############################################
@@ -178,13 +178,6 @@ shinyServer(function(input, output, session) {
     proxy <- leafletProxy("map", data = covid_vaccination)
     proxy %>% clearControls()
     
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
-    
     leafletProxy("map", data = covid_vaccination) %>%
       clearMarkers() %>%
       clearMarkerClusters() %>%
@@ -204,13 +197,6 @@ shinyServer(function(input, output, session) {
   observeEvent(input$flu_vaccination, {
     proxy <- leafletProxy("map", data = flu_vaccination)
     proxy %>% clearControls()
-    
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
     
     leafletProxy("map", data = flu_vaccination) %>%
       clearMarkers() %>%
@@ -233,13 +219,6 @@ shinyServer(function(input, output, session) {
     proxy <- leafletProxy("map", data = wifi)
     proxy %>% clearControls()
     
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
-    
     leafletProxy("map", data = wifi) %>%
       clearMarkers() %>%
       clearMarkerClusters() %>%
@@ -260,13 +239,6 @@ shinyServer(function(input, output, session) {
   observeEvent(input$food, {
     proxy <- leafletProxy("map", data = food)
     proxy %>% clearControls()
-    
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
     
     leafletProxy("map", data = food) %>%
       clearMarkers() %>%
@@ -290,13 +262,6 @@ shinyServer(function(input, output, session) {
     proxy <- leafletProxy("map", data = drop_in)
     proxy %>% clearControls()
     
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
-    
     leafletProxy("map", data = drop_in) %>%
       clearMarkers() %>%
       clearMarkerClusters() %>%
@@ -317,12 +282,6 @@ shinyServer(function(input, output, session) {
     proxy <- leafletProxy("map", data = job)
     proxy %>% clearControls()
     
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
     
     leafletProxy("map", data = job) %>%
       clearMarkers() %>%
@@ -344,13 +303,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$youth_drop_in, {
     proxy <- leafletProxy("map", data = youth_drop_in)
     proxy %>% clearControls()
-    
-    # clear the map
-    # leafletProxy("map", data = covid_vaccination) %>%
-    #   clearShapes() %>%
-    #   clearMarkers() %>%
-    #   addProviderTiles("CartoDB.Voyager") %>%
-    #   fitBounds(-74.354598, 40.919500, -73.761545, 40.520024)
+
     
     leafletProxy("map", data = youth_drop_in) %>%
       clearMarkers() %>%
@@ -601,7 +554,7 @@ shinyServer(function(input, output, session) {
     pth4<-pth4%>%layout(
       font=list(size=14,color='grey'),
       paper_bgcolor='transparent',
-      xaxis=list(title='Date',showgrid=F,tickangle=45),
+      xaxis=list(title='Date',showgrid=F,tickangle=30),
       yaxis=list(title='Percentage of Students in Temporary Housing',showgrid=F),
       margin=list(t=80,b=0,r=80,autoexpand=T),
       legend=list(text="By Percentage",x=0.55,y=1,bordercolor='grey',borderwidth=1)
@@ -610,9 +563,9 @@ shinyServer(function(input, output, session) {
     pth5<-plot_ly(data=thdf21,x=~School,y=~Temp_Housing,type='bar',name='By Population')
     pth5<-pth5%>%layout(
       font=list(size=14,color='grey'),
-      title=list(text="10 Schools with most Students in Temporary Housing",font=list(size=24,color='grey')),
+      title=list(text="10 Schools with Most Students in Temporary Housing",font=list(size=24,color='grey')),
       paper_bgcolor='transparent',
-      xaxis=list(title='School',showgrid=F,tickangle=45),
+      xaxis=list(title='School',showgrid=F,tickangle=30),
       yaxis=list(title='Population of Students in Temporary Housing',showgrid=F),
       margin=list(t=80,b=0,r=80,autoexpand=T)
     )

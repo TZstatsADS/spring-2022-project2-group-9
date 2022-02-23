@@ -32,13 +32,13 @@ library(stringr)
 
 ## NYC Outdoor Activity Data ###################################
 
-covid_vaccination = read.csv("../data/Covid_Vaccine.csv") 
-flu_vaccination = read.csv("../data/Seasonal_Flu_Vaccinations_location.csv") 
-wifi = read.csv("../data/LinkNYC_Kiosk_location.csv") 
-food = read.csv("../data/Food_Stamp_Centers_location.csv") 
-drop_in = read.csv("../data/Homeless_Drop-In_Centers_location.csv") 
-job = read.csv("../data/After_school_programs_Jobs_and_Internships.csv") 
-youth_drop_in = read.csv("../data/After_school_programs_Runaway_And_Homeless_Youth.csv") 
+covid_vaccination = read.csv("data/Covid_Vaccine.csv") 
+flu_vaccination = read.csv("data/Seasonal_Flu_Vaccinations_location.csv") 
+wifi = read.csv("data/LinkNYC_Kiosk_location.csv") 
+food = read.csv("data/Food_Stamp_Centers_location.csv") 
+drop_in = read.csv("data/Homeless_Drop-In_Centers_location.csv") 
+job = read.csv("data/After_school_programs_Jobs_and_Internships.csv") 
+youth_drop_in = read.csv("data/After_school_programs_Runaway_And_Homeless_Youth.csv") 
 
 ## Covid Confirmed Cases Data for map ###################################
 
@@ -50,12 +50,11 @@ data <- left_join(last7days.by.modzcta, zip_code_database, by="zip")
 write.csv(data,"output/casebyzipcode.csv")
 
 data2 <- read.csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/master/totals/data-by-modzcta.csv")
-#zipcode <- read.csv("zipcode.csv")
 load("output/geo_data.RData")
 
 # crime data
-crime_count = read.csv("../data/crime_by_precinct.csv", encoding = "UTF-8") 
-shape <-  read_sf('../data/Police Precincts/geo_export_bd71aa2e-95c8-494a-b0db-8f41326bf675.shp')
+crime_count = read.csv("data/crime_by_precinct.csv", encoding = "UTF-8") 
+shape <-  read_sf('data/Police Precincts/geo_export_bd71aa2e-95c8-494a-b0db-8f41326bf675.shp')
 
 ## case plot data ###################################
 #Get the raw data about the active case rate by zip code.
@@ -160,7 +159,7 @@ for (i in 3:ncol(cbd)){
 Borough_case <- c("Citywide","Manhattan", "Queens", "Bronx", "Brooklyn", "Staten Island")
 
 #prediction function
-source("../lib/trend.R")
+source("trend.R")
 
 #create predictions
 predictions_perp <-  perp_zipcode[0,]
@@ -208,7 +207,7 @@ for(i in names(perp_zipcode)){
 
  
  #prediction function
-  source("../lib/trend.R")
+  source("trend.R")
   
   #create predictions
   predictions_perp <-  perp_zipcode[0,]
@@ -262,12 +261,12 @@ for(i in names(perp_zipcode)){
   
   ########################Read data
   
-  covid<-read.csv('../data/Covid.csv')
-  dhs<-read.csv('../data/DHS_Report.csv')
-  crime<-read.csv('../data/18_21_Crime.csv')
-  th<-read.csv('../data/Students_In_Temporary_Housing.csv')
-  li<-read.csv('../data/Housing_for_low_income.csv')
-  li_sum<-read.csv('../data/Summary_of_Housing.csv')
+  covid<-read.csv('data/Covid.csv')
+  dhs<-read.csv('data/DHS_Report.csv')
+  crime<-read.csv('data/18_21_Crime.csv')
+  th<-read.csv('data/Students_In_Temporary_Housing.csv')
+  li<-read.csv('data/Housing_for_low_income.csv')
+  li_sum<-read.csv('data/Summary_of_Housing.csv')
   
   
   ###ALL VISUALIZATION WE WANT TO MAKE
