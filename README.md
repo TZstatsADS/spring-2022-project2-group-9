@@ -60,7 +60,7 @@ proj/
 ├── lib/
 ├── data/
 ├── doc/
-├── README.md/
+├── README.md
 ```
 
 Please see each subfolder for a README file.
