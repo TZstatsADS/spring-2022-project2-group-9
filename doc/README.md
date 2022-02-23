@@ -2,4 +2,4 @@
 
 ### Doc folder
 
-The doc directory contains the project description.
+The doc directory contains the project description and some figures.
