@@ -2,21 +2,7 @@
 
 ### [Project Description](doc/project2_desc.md)
 
-![screenshot](doc/figs/map.jpg)
-
-In this second project of GR5243 Applied Data Science, we develop a *Exploratory Data Analysis and Visualization* shiny app on a topic of your choice using [JHU CSSE Covid-19 Data](https://github.com/CSSEGISandData/COVID-19) or NYC Health open data released on the [NYC Coronavirus Disease 2019 Data](https://github.com/nychealth/coronavirus-data) website. See [Project 2 Description](doc/project2_desc.md) for more details.  
-
-The **learning goals** for this project is:
-
-- business intelligence for data science
-- study legacy codes and further development
-- data cleaning
-- data visualization
-- systems development/design life cycle
-- shiny app/shiny server
-
-*The above general statement about project 2 can be removed once you are finished with your project. It is optional.
-
+(ADD SCREENSHOTS HERE)
 
 ## Helping NYC Youth during COVID
 
@@ -32,7 +18,23 @@ The **learning goals** for this project is:
 
 *_Click here for our [**Shiny app**](http://ads-project2.shinyapps.io/project2)._
 
-**Project Summary:** In this project, we developed a shiny app mainly focuses on Youth in need in NYC. We developed the interactive map for people to see the location or heat map of anything they are interested, and concluded statistical analysis for them to refer to.
+**Project Summary:** 
+
+The COVID-19 pandemic has had a drastic impact on all of us whether it’s losing a job, getting behind on rent or mortgage payments, or struggling to bring food to the table. It has been even harder for low income families to have access to the resources they need to stay safe and healthy. In an effort to help low income families, specifically the youth, as they might find it challenging to navigate these unprecedented times, we created this app. We’re hopeful that our aggregated resources to covid and flu vaccination sites, food, shelter, after school centers, job/internship opportunities, and crime rates will play a small but crucial role in supporting the youth of New York City.
+
+In this app, We mainly developed 3 functions, the interactive map, statistical analysis and about.
+
++ Interactive Map:
+  + Locations for Covid vaccination, flu shots, wifi, food centers, drop in centers, youth shelters, job/internship centers
+  + Heatmap distribution of covid cases and crime 
+
++ Statistical Analysis:
+  + Graphs of crime status during covid pandemic, explanation for some phenomena and conclusion 
+  + Graphs of housing status during covid pandemic, explanation for some phenomena and conclusion 
+
++ About:
+  + Links to data sources, data disclaimer, app contributors
+ 
 
 **[Contribution statement]**: 
 
