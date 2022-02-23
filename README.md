@@ -40,7 +40,7 @@ In this app, We mainly developed 3 functions, the interactive map, statistical a
 
 - **Rhea Sablani (Presenter)**: 
 - **Xile Zhang**: Raised the topic, collected complete and related data and wrote the framework planning of the project. Collected and processed all related data in Interactive Map page. Contributed to the Interactive Map page by creating three covid-related heatmaps. Contributed to the Statistical Analysis page by improving the analysis of Housing status during COVID pandemic. Produced a related reading document to help understanding the data story.
-- **Yvonne Zha**
+- **Yvonne Zha**: Participated in topic selection. Researched and concluded apps from former semesters to find their advantages and absorbed these points to initialize the shiny app. Implemented the home page and helped to polish all pages of the app. Added markers with combine-and-split effect on the interactive map. Integrated different parts from team members into the final app.
 - **Sharon Meng**: Recorded the process of the whole project regularly on a team google doc and hosted zoom meetings for remote communication. Designed the template for the Shiny App page including `Home` and `Statistical Analysis` page. Cleaned and visualized all related data about crime, housing and COVID status in NYC to create plots in the `Statistical Analysis` page, explained the graphs and came out with some conclusions. Organized all files used in this app and wrote all `xxx.md` files in Github. 
 
 	In all, all team members contributed **equally** in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
