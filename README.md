@@ -33,8 +33,8 @@ In this app, We mainly developed 3 functions, the interactive map, statistical a
   + Heatmap distribution of covid cases and crime 
 
 + Statistical Analysis:
-  + Graphs of crime status during covid pandemic, explanation for some phenomena and conclusion 
-  + Graphs of housing status during covid pandemic, explanation for some phenomena and conclusion 
+  + Visualization of relationships between crime status and Covid and housing status and Covid
+  + Plausible explanations and conclusions for trends observed
 
 + About:
   + Links to data sources, data disclaimer, app contributors
