@@ -35,9 +35,6 @@ dashboardPage(
         icon = icon("fas fa-chart-area")
       )
     ),
-    #menuItem("About", tabName = "SafetyMap", icon = icon("fas fa-globe")),
-    #menuItem("Neighborhood Analysis", tabName = "Neighborhood", icon = icon("fas fa-users")),
-    #menuItem("Age Group Analysis", tabName = "Age", icon = icon("fas fa-chart-bar")),
     menuItem("About", tabName = "About", icon = icon("fas fa-asterisk"))
   )),
   
@@ -47,54 +44,65 @@ dashboardPage(
       #     
       #     #----------------------------Home Page------------------------------------
       #     
-      #     tabItem(tabName = "Home",
-      #             fluidPage(
-      #               
-      #               # header image
-      #               img(src = 'https://raw.githubusercontent.com/TZstatsADS/Spring2021-Project2-group2/master/app/www/header.png?token=ASOKTIRIASA5QBLBYDHGXVDAGQ52E', width = '100%'),
-      #               
-      #               
-      #               # dashboard for current stats
-      #               fluidRow(
-      #                 column(4,
-      #                        fluidRow(
-      #                          h2("Current NYC Status", align = "left"),
-      #                          textOutput("timestamp")),
-      #                        br(),
-      #                        fluidRow(infoBoxOutput("NYCtotal", width = 12)),
-      #                        fluidRow(infoBoxOutput("Boro", width = 12)),
-      #                        fluidRow(infoBoxOutput("Zipcode", width = 12)),
-      #                        fluidRow(infoBoxOutput("Boro_safe", width = 12)),
-      #                        fluidRow(infoBoxOutput("Zipcode_safe", width = 12))),
-      #                 
-      #                 # the introduction section    
-      #                 column(8,
-      #                        box(width = '100%',
-      #                            h1("Travel Safely for Your Grocery Today!", align = "center"),
-      #                            br(),
-      #                            tags$div(tags$ul("The American life has been dramatically changed by COVID-19 since 2020, with confirmed cases climbing from thousands to millions within a span of a few months.",
-      #                                             "The state of New York has been the top 5 states with most COVID cases in America since the beginning of the pandemic, and ", span(strong("New York City")), 
-      #                                             "has 5 times higher case counts than the rest of the state. Activities and restaurants are open and shut-down with changes in health guidelines, leaving only the essential businesses open.",
-      #                                             br(),br(),
-      #                                             "Shopping for grocery is one essential task for many New Yorkers, and how to get around safely to get your grocery has become a challenge during COVID.",
-      #                                             "Living in the City of New York, we need to learn how to continue our daily routine while keeping ourselves and our community safe.",
-      #                                             "As a result, we have created this webpage to help our fellow New Yorkers to receive up-to-date COVID information about the areas where they want to shop for grocery.",
-      #                                             br(),br(),
-      #                                             span(strong("If you ever have some of these similar ideas:")),
-      #                                             br(),br(),
-      #                                             tags$li("I enjoy picking out my own grocery."),
-      #                                             tags$li("I like to have fresh food."),
-      #                                             tags$li("I don't use app delivery for food."),
-      #                                             tags$li("I don't like other people touching my food."),
-      #                                             tags$li("I enjoy going to the store physically."),
-      #                                             tags$li("I crave for food randomly and want to know what's available around my area."),
-      #                                             tags$li("I just want to go out and walk around!!!"),
-      #                                             "and many more...")),
-      #                            h2(id ="smalltitle", "You have come to the right place!!!", align = "center"),
-      #                            tags$style(HTML("#smalltitle{color:green; font-style: bold;}")),
-      #                            div(img(src = "https://raw.githubusercontent.com/TZstatsADS/Spring2021-Project2-group2/master/app/www/footer.gif?token=ASOKTIWBNAS2SZ5NG7PKU6DAGQ57S", width = '70%'), style = "text-align: center;")
-      #                        )))
-      #             )),            
+          tabItem(tabName = "Home",
+                  fluidPage(
+
+                    # header image
+                    img(src = 'homepage.jpg', width = '100%', height = '30%'),
+
+                    # dashboard for current stats
+                    fluidRow(
+
+
+                      # the introduction section
+                      column(8,
+                             box(width = '100%',
+                                 h1("Find your place in NYC", align = "center"),
+                                 tags$div(tags$ul("The COVID-19 pandemic has had a drastic impact on all of us whether 
+                                                  it’s losing a job, getting behind on rent or mortgage payments, or 
+                                                  struggling to bring food to the table. It has been even harder for 
+                                                  low income families to have access to the resources they need to stay 
+                                                  safe and healthy. In an effort to help low income families, specifically 
+                                                  the youth, as they might find it challenging to navigate these unprecedented 
+                                                  times, we created this app. We’re hopeful that our aggregated resources to 
+                                                  covid and flu vaccination sites, food, shelter, after school centers, 
+                                                  job/internship opportunities, and crime rates will play a small but 
+                                                  crucial role in supporting the youth of New York City.",
+                                          br(),br(),
+                                          span(strong("Check out our amazing functions!")),
+                                          br(),br(),
+                                          span(strong("NYC Interactive Map:")),
+                                          tags$li("Locations for Covid vaccination, flu shots, wifi, food centers, drop in centers, youth shelters, job/internship centers"),
+                                          tags$li("Heatmap distribution of covid cases and crime"),
+                                          br(),
+                                          span(strong("Statistical Analysis:")),
+                                          tags$li("Graphs of crime status during covid pandemic, explanation for some phenomenons and conclusion"),
+                                          tags$li("Graphs of housing status during covid pandemic, explanation for some phenomena and conclusion"),
+                                          br(),
+                                          span(strong("About:")),
+                                          tags$li("Links to data sources, data disclaimer, app contributors")
+                                          )),
+                                          
+                                 
+                                 
+                                 # h2(id ="smalltitle", "You have come to the right place!!!", align = "center"),
+                                 tags$style(HTML("#smalltitle{color:green; font-style: bold;}"))
+                                 
+                                 
+                                 
+                             )),
+                      
+                      
+                      
+                      column(4,
+                             fluidRow(
+                               h2("NYC Youth Status", align = "center")),
+                             br(),
+                             fluidRow(infoBoxOutput("covidtotal", width = 14)),
+                             fluidRow(infoBoxOutput("student_temphouse", width = 14)),
+                             fluidRow(infoBoxOutput("crime_no", width = 14))
+                      ),
+                  ))),
       #     
       #     #------------------------------NYC Map------------------------------------
       tabItem(tabName = "NYCMap", 
