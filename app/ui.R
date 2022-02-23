@@ -43,21 +43,21 @@ dashboardPage(
       #     
       #     #----------------------------Home Page------------------------------------
       #     
-          tabItem(tabName = "Home",
-                  fluidPage(
-
-                    # header image
-                    img(src = 'homepage.jpg', width = '100%', height = '30%'),
-
-                    # dashboard for current stats
-                    fluidRow(
-
-
-                      # the introduction section
-                      column(8,
-                             box(width = '100%',
-                                 h1("Find your place in NYC", align = "center"),
-                                 tags$div(tags$ul("The COVID-19 pandemic has had a drastic impact on all of us whether 
+      tabItem(tabName = "Home",
+              fluidPage(
+                
+                # header image
+                img(src = 'homepage.jpg', width = '100%', height = '30%'),
+                
+                # dashboard for current stats
+                fluidRow(
+                  
+                  
+                  # the introduction section
+                  column(8,
+                         box(width = '100%',
+                             h1("Find your place in NYC", align = "center"),
+                             tags$div(tags$ul("The COVID-19 pandemic has had a drastic impact on all of us whether 
                                                   it’s losing a job, getting behind on rent or mortgage payments, or 
                                                   struggling to bring food to the table. It has been even harder for 
                                                   low income families to have access to the resources they need to stay 
@@ -67,41 +67,41 @@ dashboardPage(
                                                   covid and flu vaccination sites, food, shelter, after school centers, 
                                                   job/internship opportunities, and crime rates will play a small but 
                                                   crucial role in supporting the youth of New York City.",
-                                          br(),br(),
-                                          span(strong("Check out our amazing functions!")),
-                                          br(),br(),
-                                          span(strong("NYC Interactive Map:")),
-                                          tags$li("Locations for Covid vaccination, flu shots, wifi, food centers, drop in centers, youth shelters, job/internship centers"),
-                                          tags$li("Heatmap distribution of covid cases and crime"),
-                                          br(),
-                                          span(strong("Statistical Analysis:")),
-                                          tags$li("Graphs of crime status during covid pandemic, explanation for some phenomenons and conclusion"),
-                                          tags$li("Graphs of housing status during covid pandemic, explanation for some phenomena and conclusion"),
-                                          br(),
-                                          span(strong("About:")),
-                                          tags$li("Links to data sources, data disclaimer, app contributors")
-                                          )),
-                                          
-                                 
-                                 
-                                 # h2(id ="smalltitle", "You have come to the right place!!!", align = "center"),
-                                 tags$style(HTML("#smalltitle{color:green; font-style: bold;}"))
-                                 
-                                 
-                                 
+                                              br(),br(),
+                                              span(strong("Check out our amazing functions!")),
+                                              br(),br(),
+                                              span(strong("NYC Interactive Map:")),
+                                              tags$li("Locations for Covid vaccination, flu shots, wifi, food centers, drop in centers, youth shelters, job/internship centers"),
+                                              tags$li("Heatmap distribution of covid cases and crime"),
+                                              br(),
+                                              span(strong("Statistical Analysis:")),
+                                              tags$li("Visualization of relationships between crime status and Covid and housing status and Covid"),
+                                              tags$li("Plausible explanations and conclusions for trends observed"),
+                                              br(),
+                                              span(strong("About:")),
+                                              tags$li("Links to data sources, data disclaimer, app contributors")
                              )),
-                      
-                      
-                      
-                      column(4,
-                             fluidRow(
-                               h2("NYC Youth Status", align = "center")),
-                             br(),
-                             fluidRow(infoBoxOutput("covidtotal", width = 14)),
-                             fluidRow(infoBoxOutput("student_temphouse", width = 14)),
-                             fluidRow(infoBoxOutput("crime_no", width = 14))
-                      ),
-                  ))),
+                             
+                             
+                             
+                             # h2(id ="smalltitle", "You have come to the right place!!!", align = "center"),
+                             tags$style(HTML("#smalltitle{color:green; font-style: bold;}"))
+                             
+                             
+                             
+                         )),
+                  
+                  
+                  
+                  column(4,
+                         fluidRow(
+                           h2("NYC Youth Status", align = "center")),
+                         br(),
+                         fluidRow(infoBoxOutput("covidtotal", width = 14)),
+                         fluidRow(infoBoxOutput("student_temphouse", width = 14)),
+                         fluidRow(infoBoxOutput("crime_no", width = 14))
+                  ),
+                ))),
       #     
       #     #------------------------------NYC Map------------------------------------
       tabItem(tabName = "NYCMap", 
@@ -362,60 +362,5 @@ dashboardPage(
                 " <p>Zhang, Xile        |email: xz2985@columbia.edu </p>",
                 " <p>The inspiration and template for this page can be credited to Fall 2020 Project2 Group1. </p>"
               )
-                   
-      #     #-------------------------------------Reference Page---------------------------------
-      #     tabItem(tabName = "About", 
-      #             HTML(
-      #               "<h2> Data Source : </h2>
-      #                             <h4><li>NYC COVID-19 Data : <a href='https://github.com/nychealth/coronavirus-data' target='_blank'>Github NYC Health</a></li></h4>
-      #                             <h4><li>NYC Shooting Data : <a href='https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Year-To-Date-/5ucz-vwe8' target='_blank'>NYC Public Safety</a></li></h4>
-      #                             <h4><li>NYC Retail Food Stores Data : <a href='https://catalog.data.gov/dataset/retail-food-stores' target='_blank'>State of NY government</a></li></h4>
-      #                             <h4><li>NYC Farmers Market Data : <a href='https://catalog.data.gov/dataset/farmers-markets-in-new-york-state' target='_blank'>State of NY government</a></li></h4>"
-      #               
-      #             ),
-      #             
-      #             titlePanel("Disclaimers : "),
-      #             HTML(
-      #               "<b>NYC COVID-19 Data: </b> <br>
-      #                             <li>This repository contains data on Coronavirus Disease 2019 (COVID-19) in New York City (NYC).  </li>
-      #                             <li>The Health Department classifies the start of the COVID-19 outbreak in NYC as the date of the first laboratory-confirmed case, February 29, 2020. </li>
-      #                             " 
-      #             ),
-      #             
-      #             HTML(
-      #               "<b>NYC Shooting Data : </b> <br>
-      #                             <li>List of every shooting incident that occurred in NYC during the current calendar year.</li>"
-      #             ),
-      #             
-      #             HTML(
-      #               "<b>NYC Retail Food Stores Data : </b> <br>
-      #                             <li>A listing of all retail food stores which are licensed by the Department of Agriculture and Markets. </li>"
-      #             ),
-      #             
-      #             HTML(
-      #               "<b>NYC Farmers Market Data : </b> <br>
-      #                             <li> In the past decade the number of farmers' markets in New York State has grown at a rapid rate. </li>
-      #                             <li> The dataset contains information detailing the time and location of community farmers' markets as well as the name and phone number of the market manager.</li>"
-      #             ),
-      #             
-      #             titlePanel("Credits : "),
-      #             HTML(
-      #               " <p>Our app was built using RShiny.</p>",
-      #               "<p>The following R packages were used in to build this RShiny application:</p>
-      #                               <p>
-      #                               <code>RCurl</code><code>dplyr</code><code>tibble</code>
-      #                               <code>leaflet</code><code>tidyverse</code><code>shinythemes</code>
-      #                               <code>tmap</code><code>plotly</code><code>ggplot2</code>
-      #                               <code>tigris</code><code>shiny</code><code>shinydashboard</code><code>sf</code><code>shinyWidgets</code>
-      #                               <code>tidyr</code><code>emojifont</code><code>viridis</code><code>readr</code><code>rgdal</code>
-      #                               </p>
-      #                               <p>This website is the result of 2021Spring GR5243 Project2 Group2, Class of 2021 of the M.A. Statistics program at Columbia University.</p>",
-      #               " <p>Chen,Pin-Chun     |email: pc2939@columbia.edu </p>",
-      #               " <p>Fang,Zi           |email: zf2258@columbia.edu </p>",
-      #               " <p>Gao,Catherine     |email: catherine.gao@columbia.edu </p>",
-      #               " <p>Sang,Siyuan       |email: ss6165@columbia.edu </p>",
-      #               " <p>Wu,Yingyao        |email: yw3659@columbia.edu </p>",
-      #               " <p>This page's template is credit to Fall 2020 Project2 Group1. </p>"
-      #             )
-       )
+      )
     )))
