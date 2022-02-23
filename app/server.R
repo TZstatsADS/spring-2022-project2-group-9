@@ -601,7 +601,7 @@ shinyServer(function(input, output, session) {
     pth4<-pth4%>%layout(
       font=list(size=14,color='grey'),
       paper_bgcolor='transparent',
-      xaxis=list(title='Date',showgrid=F),
+      xaxis=list(title='Date',showgrid=F,tickangle=45),
       yaxis=list(title='Percentage of Students in Temporary Housing',showgrid=F),
       margin=list(t=80,b=0,r=80,autoexpand=T),
       legend=list(text="By Percentage",x=0.55,y=1,bordercolor='grey',borderwidth=1)
@@ -612,7 +612,7 @@ shinyServer(function(input, output, session) {
       font=list(size=14,color='grey'),
       title=list(text="10 Schools with most Students in Temporary Housing",font=list(size=24,color='grey')),
       paper_bgcolor='transparent',
-      xaxis=list(title='School',showgrid=F),
+      xaxis=list(title='School',showgrid=F,tickangle=45),
       yaxis=list(title='Population of Students in Temporary Housing',showgrid=F),
       margin=list(t=80,b=0,r=80,autoexpand=T)
     )
